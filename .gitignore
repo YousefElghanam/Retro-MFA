@@ -1,2 +1,5 @@
 Retro-MFA
 *.o
+bin/
+build/
+retromfa
