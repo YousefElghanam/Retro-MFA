@@ -27,7 +27,7 @@ include $(MK_DIR)sources.mk
 CC				?= cc
 # only other special flags that are not -W..., sanitizer or valgrind!
 # can stay empty
-CFLAGS_OTHER	?=
+CFLAGS_OTHER	?= -DDEBUG=1
 # standard libraries (NOT LIBFT!) go here: -lname -lname
 LIBS			?= -lmlx -lXext -lX11
 #

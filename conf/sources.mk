@@ -14,11 +14,11 @@ INC_PATHS		?= include/
 # ---------------------------------------------------------------------------- #
 # List project headers with relative path to trigger rebuilds on header change.
 # libft header is added automatically
-#HEADER		?= include/$(PROG_NAME).h
+HEADER		?= include/Retro_MFA.h
 # ---------------------------------------------------------------------------- #
 
 # Give File names relative to SRC_ROOT directory
-SRC_MAN		?= main.c
+SRC_MAN		?= main.c test_rawdata.c
 SRC_BON		?= 
 
 # Pattern for source files in subdirectories. WITH DIR SLASH
