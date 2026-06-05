@@ -14,6 +14,9 @@
 
 #define W 320//1920
 #define H 480//1080
+#define TITLE ".mfa Inspector"
+
+#define FRAME_SLEEPTIME 3000000
 
 #ifndef DEBUG
 # define DEBUG 0
@@ -31,11 +34,28 @@ typedef struct s_debug
 	unsigned int pixels;
 } t_debug;
 
+typedef struct s_data
+{
+	t_byte file_buf[BUFFER_SIZE];
+	int fd;
+	t_mlxu visual;
+	t_mlxu_2d px;
+	t_debug dinfo;
+} t_data;
+
+// -----------------------------------------------------------------------------
+// prototypes
+// -----------------------------------------------------------------------------
+
+bool init(t_data *data, char *file);
+int cleanup(t_data *data, int res, char *err_msg);
+
 // -----------------------------------------------------------------------------
 // raw data experiment
 // -----------------------------------------------------------------------------
 
-void visual_test(t_byte* file_buf, t_mlxu* visual, t_mlxu_2d* px, t_debug* dinfo);
+void visual_test(t_data *data);
 void prt_frameinfo(t_debug* dinfo, t_mlxu_2d* last_px);
+void rnd_frame(t_data *data);
 
 #endif /* RETRO_MFA_H */
