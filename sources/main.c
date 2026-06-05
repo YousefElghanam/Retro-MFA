@@ -5,8 +5,6 @@
 bool read_file(int fd, t_byte *file_buf) {
   ssize_t bytes = read(fd, file_buf, BUFFER_SIZE);
   printf("bytes: %zd\n", bytes);
-  printf("buffer: |");
-//   write(STDOUT_FILENO, file_buf, bytes);
   if (bytes == 0)
 	return (false);
   return (true);
@@ -15,7 +13,7 @@ bool read_file(int fd, t_byte *file_buf) {
 void visual_test(t_byte* file_buf, t_mlxu* visual, t_mlxu_2d* px)
 {
 	static int frame;
-	static unsigned int bytes;
+	static unsigned int pixels;
 	int color = 0;
 	for (int i = 0; i + 2 < BUFFER_SIZE;)
 	{
@@ -27,28 +25,20 @@ void visual_test(t_byte* file_buf, t_mlxu* visual, t_mlxu_2d* px)
 		i += 4;
 		// read from buffer UNTIL all pixels are filled
 		// then render, wait a bit, start over
-		// if (i > 100000)
-		// {
-		// 	mlxu_flush_buffer(visual);
-		// 	usleep(3000000);
-		// 	break ;
-		// }
-		if (color > 0)
-			printf("i: %i || color: %i\n", i, color);
 		mlxu_pixel_put_buffer(visual, px->x, px->y, color);
-		if (px->x == visual->dsp_size.x)
+		if (px->x == visual->active.win->size.x)
 		{
-			printf("row %i full\n", px->y);
+			// printf("row %i full\n", px->y);
 			px->x = 0;
 			px->y++;
 		}
 		else
 			px->x++;
-		if (px->y == visual->dsp_size.y && px->x == visual->dsp_size.x)
+		if (px->y == visual->active.win->size.y && px->x == visual->active.win->size.x)
 		{
-			bytes += px->x * px->y;
+			pixels += px->x * px->y;
 			frame++;
-			printf("frame #%i (kbytes: %u)\n", frame, (unsigned int) bytes/1000);
+			printf("frame #%i (pixels|bytes: %u|%u)\n", frame, pixels, pixels * 4);
 			mlxu_flush_buffer(visual);
 			usleep(3000000);
 			px->x = 0;
