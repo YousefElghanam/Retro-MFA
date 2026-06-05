@@ -1,10 +1,14 @@
 #include "Retro_MFA.h"
 
 bool read_file(t_data *data) {
-  ssize_t bytes = read(data->fd, data->file_buf, BUFFER_SIZE);
-  if (DEBUG)
-  	printf("read %zd bytes from file\n", bytes);
-  if (bytes == 0)
+  data->bytes_read = read(data->fd, data->file_buf, BUFFER_SIZE);
+  if (DEBUG) {
+	static ssize_t total;
+	total += data->bytes_read;
+	printf("read %zd bytes from file (total: %zd)\n",
+		data->bytes_read, total);
+  }
+  if (data->bytes_read == 0)
 	return (false);
   return (true);
 }

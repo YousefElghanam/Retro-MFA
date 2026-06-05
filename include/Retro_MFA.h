@@ -38,6 +38,7 @@ typedef struct s_data
 {
 	t_byte file_buf[BUFFER_SIZE];
 	int fd;
+	ssize_t bytes_read;
 	t_mlxu visual;
 	t_mlxu_2d px;
 	t_debug dinfo;
@@ -55,7 +56,7 @@ int cleanup(t_data *data, int res, char *err_msg);
 // -----------------------------------------------------------------------------
 
 void visual_test(t_data *data);
-void prt_frameinfo(t_debug* dinfo, t_mlxu_2d* last_px);
+void prt_frameinfo(t_debug* dinfo);
 void rnd_frame(t_data *data);
 
 #endif /* RETRO_MFA_H */

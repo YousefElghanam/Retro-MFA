@@ -1,20 +1,21 @@
 #include "Retro_MFA.h"
 
-void prt_frameinfo(t_debug* dinfo, t_mlxu_2d* last_px)
+void prt_frameinfo(t_debug* dinfo)
 {
 	if (!DEBUG)
 		return ;
-	unsigned int last_pixels = dinfo->pixels;
-	dinfo->pixels += last_px->x * last_px->y;
+	static unsigned int last_pixels;
+	// dinfo->pixels += last_px->x * last_px->y;
 	dinfo->frame++;
 	printf("frame #%i: %6u pixels (total: %u pixels, %u bytes)\n",
 		dinfo->frame, dinfo->pixels - last_pixels,
 		dinfo->pixels, dinfo->pixels * 4);
+	last_pixels = dinfo->pixels;
 }
 
 void rnd_frame(t_data *data)
 {
-	prt_frameinfo(&data->dinfo, &data->px);
+	prt_frameinfo(&data->dinfo);
 	mlxu_flush_buffer(&data->visual);
 	usleep(FRAME_SLEEPTIME);
 }
@@ -35,8 +36,9 @@ void visual_test(t_data *data)
 {
 	int color;
 	t_byte *buf = data->file_buf;
-	for (int i = 0; i + 2 < BUFFER_SIZE;)
+	for (int i = 0; i + 2 < data->bytes_read;)
 	{
+		data->dinfo.pixels++;
 		color = 0;
 		// -- COLLECTING COLOR INFORMATION
 		// color = buf[i] << 24 | buf[i + 1] << 16 | buf[i + 2] << 8;
