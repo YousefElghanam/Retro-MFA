@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:11:40 by mweghofe          #+#    #+#             */
-/*   Updated: 2025/02/24 11:59:34 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/05 21:01:06 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	mlxu_terminate(t_mlxu *env, char *msg)
 	int	err;
 
 	if (msg)
-		err = ft_fprintf(STDERR_FILENO, "%s\n", msg);
+		err = dprintf(STDERR_FILENO, "%s\n", msg);
 	else
 		err = 0;
 	if (!env || !env->mlx_ptr)

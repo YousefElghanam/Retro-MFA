@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 09:28:17 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/01/01 22:40:12 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/05 20:51:01 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	mlxu_clear_buffer(t_mlxu_img *buffer)
 	size_t	total_bytes;
 
 	total_bytes = buffer->bytes_line * buffer->size.y;
-	ft_bzero(buffer->mem, total_bytes);
+	bzero(buffer->mem, total_bytes);
 }
 
 // OLD VERSION

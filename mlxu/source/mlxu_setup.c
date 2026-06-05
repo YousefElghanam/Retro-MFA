@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:11:09 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/01/01 22:42:48 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/05 20:59:52 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	mlxu_setup_new_win(t_mlxu *env, char *title, t_mlxu_2d size)
 
 	if (!env->mlx_ptr)
 		return (mlxu_terminate(env, ERR_MLX_PTR));
-	window = ft_calloc(1, sizeof (t_mlxu_win));
+	window = calloc(1, sizeof (t_mlxu_win));
 	if (!window)
 		return (mlxu_terminate(env, ERR_MEM_WIN));
 	node = ft_lstnew(window);
