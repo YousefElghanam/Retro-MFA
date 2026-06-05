@@ -1,5 +1,4 @@
 #include "Retro_MFA.h"
-#include "fenster.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -13,21 +12,6 @@
 
 void read_file(int fd, char *file_buf) {
   read(fd, file_buf, BUFFER_SIZE);
-}
-
-void open_window(char *file_buf) {
-  (void)file_buf;
-  uint32_t win_buf[W * H];
-  struct fenster f = { .title = "hello", .width = W, .height = H, .buf = win_buf };
-  fenster_open(&f);
-  while (fenster_loop(&f) == 0) {
-    for (int i = 0; i < W; i++) {
-      for (int j = 0; j < H; j++) {
-        fenster_pixel(&f, i, j) = rand();
-      }
-    }
-  }
-  fenster_close(&f);
 }
 
 int main(int argc, char **argv) {
