@@ -6,11 +6,11 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:11:40 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/05 21:01:06 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/05 21:16:25 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/mlx_utils.h"
+#include "mlx_utils.h"
 
 static void	mlxu_clear_window(void *window)
 {
