@@ -26,7 +26,7 @@ static bool validate_fourbytes(
 	return (true);
 }
 
-uint32_t build_int(t_byte *buf, ssize_t bytes_read, ssize_t *offset)
+static uint32_t build_int(t_byte *buf, ssize_t bytes_read, ssize_t *offset)
 {
 	if (bytes_read < *offset + 4)
 		exit(1); // FIXME
@@ -35,6 +35,11 @@ uint32_t build_int(t_byte *buf, ssize_t bytes_read, ssize_t *offset)
 		buf[*offset + 2] << 16 |
 		buf[*offset + 1] << 8 |
 		buf[*offset];
+	printf("[int] raw bytes:  0x%.2X%.2X%.2X%.2X\n"
+		   "      offset was: %zu (0x%.2X)\n"
+		   "      converted number: %i\n",
+		buf[*offset], buf[*offset + 1], buf[*offset + 2], buf[*offset + 3],
+		*offset, (unsigned int) *offset, number);
 	*offset += 4;
 	return ((uint32_t) number);
 }
@@ -52,30 +57,18 @@ static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offse
 	validate_fourbytes(file_buf, bytes_read, offset, (uint8_t[4]){MAGIC_3});
 	// 3) skip over tile, path, filler...
 	uint32_t num;
-	num = build_int(file_buf, bytes_read, offset);
-	printf("got a length: %i \n", num);
-	*offset += num;
-	// need to advance in sequence: read length, advance offset repeat a few times
-	// OLD CODE
+	for (short i = 0; i < 4; i++)
 	{
-		// 2) locate end of header
-		const uint8_t headerend[12] = {MFA_ENDOFHEADER};
-		for (int i = 5; i < bytes_read; i++)
-		{
-			if (file_buf[i] == headerend[0] && bytes_read - i >= 12)
-			{
-				if (memcmp(file_buf + i, &headerend, 12))
-					continue;
-				else
-				{
-					printf("HEADER END FOUND\n");
-					*offset = i + 12;
-					return (true);
-				}
-			}
-		}
+		num = build_int(file_buf, bytes_read, offset);
+		*offset += num;
 	}
-	return (false);
+	// 4) skip the unknown data block 
+	*offset += 9*4 + 1024; // TODO why does it need 9*4 and not 8*4?
+	// 5) skipping more unknown data block (icons?)
+	*offset += 15540;
+	num = build_int(file_buf, bytes_read, offset);
+	*offset += num;
+	return (true);
 }
 
 bool read_file(t_data *data) {
