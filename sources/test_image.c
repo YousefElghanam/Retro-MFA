@@ -53,7 +53,27 @@ static void get_asset_data(t_data* data, ssize_t adress, t_sprite* sprite)
 void single_sprite_test(t_data* data, ssize_t adress)
 {
 	t_sprite sprite;
+	t_mlxu_2d px = {0,0,0};
+	uint16_t col_encoded;
+	ssize_t frame;
+	int color, xoff = 0;
 	get_asset_data(data, adress, &sprite);
+	frame = sprite.width * sprite.height * 2; // 2 is only for here
 	adress += 32;
-
+	for (ssize_t i = 0; i < frame; i += 2)
+	{
+		color = 0;
+		col_encoded = 0;
+		col_encoded = build_2_bytes_int(&data->file_buf[adress + i]);
+		color = col_encoded | data->file_buf[adress + i + frame] << 24;
+		mlxu_pixel_put_buffer(&data->visual, px.x + xoff, px.y, color);
+		advance_px(&px, sprite.width - 1);
+		if (px.y == sprite.height - 1 && px.x == sprite.width - 1)
+		{
+			px.x = 0;
+			px.y = 0;
+			xoff = sprite.width;
+		}
+	}
+	rnd_frame(data);
 }

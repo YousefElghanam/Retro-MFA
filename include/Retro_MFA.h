@@ -28,6 +28,7 @@
 #define ASSET_HEADER_WHITE2 32
 #define ASSET_HEADER_POS_WIDTH 12
 #define ASSET_HEADER_POS_HEIGHT 14
+#define ASSET_FILLER 240
 
 #ifndef DEBUG
 # define DEBUG 0
@@ -76,6 +77,8 @@ int cleanup(t_data *data, int res, char *err_msg);
 // -----------------------------------------------------------------------------
 // raw data experiment
 // -----------------------------------------------------------------------------
+
+void advance_px(t_mlxu_2d* px, int max_x);
 
 void visual_test(t_data *data);
 void prt_frameinfo(t_debug* dinfo);

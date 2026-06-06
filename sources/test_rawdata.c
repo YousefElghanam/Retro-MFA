@@ -20,7 +20,7 @@ void rnd_frame(t_data *data)
 	usleep(FRAME_SLEEPTIME);
 }
 
-static void advance_px(t_mlxu_2d* px, int max_x)
+void advance_px(t_mlxu_2d* px, int max_x)
 {
 	if (px->x == max_x)
 	{
