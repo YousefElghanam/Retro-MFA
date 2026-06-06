@@ -16,7 +16,7 @@
 #define H 640//480//1080
 #define TITLE ".mfa Inspector"
 
-#define FRAME_SLEEPTIME 5000000
+#define FRAME_SLEEPTIME 10000000
 
 #define MFA_FILEID 0x4d, 0x4d, 0x46, 0x32
 #define MAGIC_1 0x04, 0x00, 0x00, 0x00
