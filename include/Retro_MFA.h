@@ -10,7 +10,7 @@
 #include <string.h> // memset
 #include "mlx_utils.h"
 
-#define BUFFER_SIZE 1024 * 1024 * 10 // 10 MiB
+#define BUFFER_SIZE 1024 * 1024
 
 #define W 300//320//1920
 #define H 640//480//1080
