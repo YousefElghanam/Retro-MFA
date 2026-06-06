@@ -14,13 +14,6 @@ static void prt_32byte(t_byte* buf, ssize_t adress)
 	printf("\n");
 }
 
-static uint16_t build_short(t_byte* buf)
-{
-	uint16_t number = 
-		buf[1] << 8 |
-		buf[0];
-	return (number);
-}
 
 static void get_asset_data(t_data* data, ssize_t adress, t_sprite* sprite)
 {
@@ -31,20 +24,20 @@ static void get_asset_data(t_data* data, ssize_t adress, t_sprite* sprite)
 	// BASED ON white2.mfa !!
 	// bytes 1 & 2 are unclear
 	t_byte* buf = &data->file_buf[adress];
-	b2 = build_short(buf);
+	b2 = build_2_bytes_int(buf);
 	printf("\tbytes as integer | 1 | 2 | 21 | >>>> | %i | %i | %i |\n",
 		*buf, *(buf + 1), b2);
 	// bytes 3 to 8 are always same
-	// bytes 9 to 12 sometimes different - unclear
+	// bytes 9 to 12 4 bytes to get the num of bytes for color data
 	buf += 8;
 	printf("\tbytes as integer | 9 | 10 | 11 | 12 | >>>> | %i | %i | %i | %i |\n",
 		*buf, *(buf + 1), *(buf + 2), *(buf + 3));
 	buf += 4;
 	// bytes 13 & 14: width
-	sprite->width = build_short(buf);
+	sprite->width = build_2_bytes_int(buf);
 	buf += 2;
 	// bytes 15 & 16: height
-	sprite->height = build_short(buf);
+	sprite->height = build_2_bytes_int(buf);
 	buf += 2;
 	printf("\tdimensions: %ix%i\n", sprite->width, sprite->height);
 	// bytes 17 & 18: always same unclear... color coding?

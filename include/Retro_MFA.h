@@ -49,6 +49,7 @@ typedef struct s_sprite
 {
 	uint16_t width;
 	uint16_t height;
+	uint32_t size;
 } t_sprite;
 
 typedef struct s_data
@@ -68,6 +69,8 @@ typedef struct s_data
 
 bool init(t_data *data, char *file);
 bool read_file(t_data *data);
+uint16_t build_2_bytes_int(t_byte* buf);
+uint32_t build_4_bytes_int(t_byte *buf);
 int cleanup(t_data *data, int res, char *err_msg);
 
 // -----------------------------------------------------------------------------

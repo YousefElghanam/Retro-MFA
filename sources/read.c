@@ -26,23 +26,6 @@ static bool validate_fourbytes(
 	return (true);
 }
 
-static uint32_t build_int(t_byte *buf, ssize_t bytes_read, ssize_t *offset)
-{
-	if (bytes_read < *offset + 4)
-		exit(1); // FIXME
-	uint32_t number = 
-		buf[*offset + 3] << 24 |
-		buf[*offset + 2] << 16 |
-		buf[*offset + 1] << 8 |
-		buf[*offset];
-	printf("[int] raw bytes:  0x%.2X%.2X%.2X%.2X\n"
-		   "      offset was: %zu (0x%.2X)\n"
-		   "      converted number: %i\n",
-		buf[*offset], buf[*offset + 1], buf[*offset + 2], buf[*offset + 3],
-		*offset, (unsigned int) *offset, number);
-	*offset += 4;
-	return ((uint32_t) number);
-}
 
 static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset)
 {
@@ -59,8 +42,8 @@ static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offse
 	uint32_t num;
 	for (short i = 0; i < 4; i++)
 	{
-		num = build_int(file_buf, bytes_read, offset);
-		*offset += num;
+		num = build_4_bytes_int(&file_buf[*offset]);
+		*offset += 4 + num;
 	}
 	// 4) skip the unknown data block 
 	*offset += 9*4 + 1024; // TODO why does it need 9*4 and not 8*4?
@@ -68,8 +51,8 @@ static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offse
 	*offset += 15540; // first big noise range
 	*offset += 47008; // second larger noise range
 	*offset += 26434; // skipped until assets?? where in white 2 big chunks of data appear 54 times
-	num = build_int(file_buf, bytes_read, offset);
-	*offset += num;
+	num = build_4_bytes_int(&file_buf[*offset]);
+	*offset += 4 + num;
 	return (true);
 }
 
