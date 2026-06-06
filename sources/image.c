@@ -26,7 +26,8 @@ void get_asset_data(t_data* data, ssize_t adress)
 {
 	if (adress + ASSET_HEADER_WHITE2 > data->bytes_read)
 		return ;
-	uint16_t width, height, b2;
+	uint16_t b2;
+	t_sprite sprite;
 	prt_32byte(data->file_buf, adress);
 	// BASED ON white2.mfa !!
 	// bytes 1 & 2 are unclear
@@ -41,12 +42,12 @@ void get_asset_data(t_data* data, ssize_t adress)
 		*buf, *(buf + 1), *(buf + 2), *(buf + 3));
 	buf += 4;
 	// bytes 13 & 14: width
-	width = *buf | *(buf + 1) << 8 ;
+	sprite.width = build_short(buf);
 	buf += 2;
 	// bytes 15 & 16: height
-	height = *buf | *(buf + 1) << 8 ;
+	sprite.height = build_short(buf);
 	buf += 2;
-	printf("\tdimensions: %ix%i\n", width, height);
+	printf("\tdimensions: %ix%i\n", sprite.width, sprite.height);
 	// bytes 17 & 18: always same unclear... color coding?
 	b2 = *buf | *(buf + 1) << 8;
 	printf("\tbytes as integer | 17 | 18 | 1817 | >>>> | %i | %i | %i |\n",

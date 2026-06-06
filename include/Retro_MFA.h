@@ -45,6 +45,12 @@ typedef struct s_debug
 	unsigned int pixels;
 } t_debug;
 
+typedef struct s_sprite
+{
+	uint16_t width;
+	uint16_t height;
+} t_sprite;
+
 typedef struct s_data
 {
 	t_byte file_buf[BUFFER_SIZE];
