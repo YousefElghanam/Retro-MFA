@@ -71,7 +71,12 @@ void single_sprite_test(t_data* data, ssize_t adress)
 		off.x = 0;
 		off.y += ymax;
 		if (off.y + sprite.height >= data->visual.active.win->size.y)
-			exit(1); // FIXME
+		{
+			printf("window full, rendering...\n");
+			rnd_frame(data);
+			off.y = 0;
+			// exit(1); // FIXME
+		}
 	}
 	// ONE image
 	for (ssize_t i = 0; i < frame; i += 2)
@@ -89,4 +94,5 @@ void single_sprite_test(t_data* data, ssize_t adress)
 			off.x += sprite.width;
 		}
 	}
+	data->offset += sprite.size;
 }
