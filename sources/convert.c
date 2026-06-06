@@ -9,9 +9,9 @@ uint32_t build_4_bytes_int(t_byte *buf)
 		buf[2] << 16 |
 		buf[1] << 8 |
 		buf[0];
-	printf("[int] raw bytes:  0x%.2X%.2X%.2X%.2X\n"
-		   "      converted number: %i\n",
-		buf[0], buf[1], buf[2], buf[3], number);
+	// printf("[int] raw bytes:  0x%.2X%.2X%.2X%.2X\n"
+	// 	   "      converted number: %i\n",
+	// 	buf[0], buf[1], buf[2], buf[3], number);
 	return ((uint32_t) number);
 }
 

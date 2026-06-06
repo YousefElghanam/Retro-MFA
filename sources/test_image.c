@@ -28,10 +28,12 @@ static void get_asset_data(t_data* data, ssize_t adress, t_sprite* sprite)
 	printf("\tbytes as integer | 1 | 2 | 21 | >>>> | %i | %i | %i |\n",
 		*buf, *(buf + 1), b2);
 	// bytes 3 to 8 are always same
-	// bytes 9 to 12 4 bytes to get the num of bytes for color data
 	buf += 8;
-	printf("\tbytes as integer | 9 | 10 | 11 | 12 | >>>> | %i | %i | %i | %i |\n",
-		*buf, *(buf + 1), *(buf + 2), *(buf + 3));
+	// bytes 9 to 12 4 bytes to get the num of bytes for color data
+	sprite->size = build_4_bytes_int(buf);
+	printf("\tsize: %i\n", sprite->size);
+	// printf("\tbytes as integer | 9 | 10 | 11 | 12 | >>>> | %i | %i | %i | %i |\n",
+	// 	*buf, *(buf + 1), *(buf + 2), *(buf + 3));
 	buf += 4;
 	// bytes 13 & 14: width
 	sprite->width = build_2_bytes_int(buf);
