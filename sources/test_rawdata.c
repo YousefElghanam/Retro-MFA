@@ -36,7 +36,7 @@ void visual_test(t_data *data)
 {
 	int color;
 	t_byte *buf = data->file_buf;
-	for (int i = 0; i + 2 < data->bytes_read;)
+	for (ssize_t i = data->offset; i + 2 < data->bytes_read;)
 	{
 		data->dinfo.pixels++;
 		color = 0;

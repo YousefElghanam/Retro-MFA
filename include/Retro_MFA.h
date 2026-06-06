@@ -19,7 +19,7 @@
 #define FRAME_SLEEPTIME 3000000
 
 #define MFA_FILEID 0x4d, 0x4d, 0x46, 0x32, 0x04
-#define MFA_ENDOFHEADER 0x00
+#define MFA_ENDOFHEADER 0x00, 0xF8, 0x00, 0x00, 0xE0, 0x07, 0x00, 0x00, 0x1F, 0x00, 0x00, 0x00
 
 #ifndef DEBUG
 # define DEBUG 0
@@ -42,6 +42,7 @@ typedef struct s_data
 	t_byte file_buf[BUFFER_SIZE];
 	int fd;
 	ssize_t bytes_read;
+	ssize_t offset;
 	t_mlxu visual;
 	t_mlxu_2d px;
 	t_debug dinfo;
