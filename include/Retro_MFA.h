@@ -12,11 +12,11 @@
 
 #define BUFFER_SIZE 1024 * 1024
 
-#define W 300//320//1920
-#define H 640//480//1080
+#define W 600//320//1920
+#define H 800//480//1080
 #define TITLE ".mfa Inspector"
 
-#define FRAME_SLEEPTIME 100000000
+#define FRAME_SLEEPTIME 3000000
 
 #define MFA_FILEID 0x4d, 0x4d, 0x46, 0x32
 #define MAGIC_1 0x04, 0x00, 0x00, 0x00
@@ -25,7 +25,8 @@
 #define EMPTY_FOUR_BYTES 0x00, 0x00, 0x00, 0x00
 #define MFA_ENDOFHEADER 0x00, 0xF8, 0x00, 0x00, 0xE0, 0x07, 0x00, 0x00, 0x1F, 0x00, 0x00, 0x00
 
-#define ASSET_HEADER_WHITE2 32
+#define ASSET_HEADER_SEQUENCE 0x00, 0x00, 0x01, 0x00, 0x00, 0x00
+#define ASSET_HEADER_SIZE 32 // validated only with white2 & blue
 #define ASSET_HEADER_POS_WIDTH 12
 #define ASSET_HEADER_POS_HEIGHT 14
 #define ASSET_FILLER 240
@@ -70,6 +71,7 @@ typedef struct s_data
 
 bool init(t_data *data, char *file);
 bool read_file(t_data *data);
+void get_me_some_pretty_images(t_data* data);
 uint16_t build_2_bytes_int(t_byte* buf);
 uint32_t build_4_bytes_int(t_byte *buf);
 int cleanup(t_data *data, int res, char *err_msg);

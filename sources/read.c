@@ -26,7 +26,6 @@ static bool validate_fourbytes(
 	return (true);
 }
 
-
 static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset)
 {
 	// 1) initial check for file id
@@ -48,11 +47,11 @@ static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offse
 	// 4) skip the unknown data block 
 	*offset += 9*4 + 1024; // TODO why does it need 9*4 and not 8*4?
 	// 5) skipping more unknown data block (icons?)
-	*offset += 15540; // first big noise range
-	*offset += 47008; // second larger noise range
-	*offset += 26434; // skipped until assets?? where in white 2 big chunks of data appear 54 times
-	num = build_4_bytes_int(&file_buf[*offset]);
-	*offset += 4 + num;
+	// *offset += 15540; // first big noise range
+	// *offset += 47008; // second larger noise range
+	// *offset += 26434; // skipped until assets?? where in white 2 big chunks of data appear 54 times
+	// num = build_4_bytes_int(&file_buf[*offset]); // TODO is this the 4 byte sequence BEFORE the 32 byte?
+	// *offset += 4 + num;
 	return (true);
 }
 

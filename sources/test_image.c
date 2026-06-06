@@ -5,7 +5,7 @@ static void prt_32byte(t_byte* buf, ssize_t adress)
 {
 	int bytes = 1;
 	printf("bytes 0x%.6X (%zu): ", (unsigned int) adress, adress);
-	for (int i = adress; i < adress + ASSET_HEADER_WHITE2; i++)
+	for (int i = adress; i < adress + ASSET_HEADER_SIZE; i++)
 	{
 		printf("%.2x ", buf[i]);
 		if (bytes % 8 == 0)
@@ -18,7 +18,7 @@ static void prt_32byte(t_byte* buf, ssize_t adress)
 
 static void get_asset_data(t_data* data, ssize_t adress, t_sprite* sprite)
 {
-	if (adress + ASSET_HEADER_WHITE2 > data->bytes_read)
+	if (adress + ASSET_HEADER_SIZE > data->bytes_read)
 		return ;
 	uint16_t b2;
 	prt_32byte(data->file_buf, adress);
@@ -71,7 +71,12 @@ void single_sprite_test(t_data* data, ssize_t adress)
 		off.x = 0;
 		off.y += ymax;
 		if (off.y + sprite.height >= data->visual.active.win->size.y)
-			exit(1); // FIXME
+		{
+			printf("window full, rendering...\n");
+			rnd_frame(data);
+			off.y = 0;
+			// exit(1); // FIXME
+		}
 	}
 	// ONE image
 	for (ssize_t i = 0; i < frame; i += 2)
@@ -93,4 +98,5 @@ void single_sprite_test(t_data* data, ssize_t adress)
 			off.x += sprite.width;
 		}
 	}
+	data->offset += sprite.size;
 }
