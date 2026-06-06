@@ -35,9 +35,13 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 	return (0);
 }
 
-void get_me_some_pretty_images(t_data* data)
+int get_me_some_pretty_images(t_data* data)
 {
 	ssize_t addr = 0;
+	// static ssize_t start;
+	// if (start == 0)
+	// 	start = data->offset;
+	// data->offset = start;
 	while (data->offset < data->bytes_read)
 	{
 		addr = find_assets(data->file_buf, data->bytes_read, &data->offset);
@@ -47,4 +51,6 @@ void get_me_some_pretty_images(t_data* data)
 	}
 	printf("rendered %i images\n", data->dinfo.images);
 	rnd_frame(data);
+	mlx_loop(data->visual.mlx_ptr);
+	return (0);
 }

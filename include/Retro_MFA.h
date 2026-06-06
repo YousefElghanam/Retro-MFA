@@ -12,11 +12,11 @@
 
 #define BUFFER_SIZE 1024 * 1024
 
-#define W 600//320//1920
+#define W 900//320//1920
 #define H 800//480//1080
 #define TITLE ".mfa Inspector"
 
-#define FRAME_SLEEPTIME 3000000
+#define FRAME_SLEEPTIME 300
 
 #define MFA_FILEID 0x4d, 0x4d, 0x46, 0x32
 #define MAGIC_1 0x04, 0x00, 0x00, 0x00
@@ -30,6 +30,9 @@
 #define ASSET_HEADER_POS_WIDTH 12
 #define ASSET_HEADER_POS_HEIGHT 14
 #define ASSET_FILLER 240
+
+#define DestroyNotify		17
+#define NoEventMask			0L
 
 #ifndef DEBUG
 # define DEBUG 0
@@ -72,7 +75,8 @@ typedef struct s_data
 
 bool init(t_data *data, char *file);
 bool read_file(t_data *data);
-void get_me_some_pretty_images(t_data* data);
+int keyhooks(int key, void* param);
+int get_me_some_pretty_images(t_data* data);
 uint16_t build_2_bytes_int(t_byte* buf);
 uint32_t build_4_bytes_int(t_byte *buf);
 int cleanup(t_data *data, int res, char *err_msg);
@@ -84,7 +88,6 @@ int cleanup(t_data *data, int res, char *err_msg);
 void advance_px(t_mlxu_2d* px, int max_x);
 
 void visual_test(t_data *data);
-void prt_frameinfo(t_debug* dinfo);
 void rnd_frame(t_data *data);
 
 void single_sprite_test(t_data* data, ssize_t adress);

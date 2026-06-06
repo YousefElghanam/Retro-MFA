@@ -11,7 +11,11 @@ bool init(t_data *data, char *file) {
   	return (false);
   if (mlxu_setup_new_win(&data->visual, TITLE, (t_mlxu_2d){W,H,0}) != 0)
   	return (false);
-  // TODO mlx hooks
+  mlx_hook(data->visual.active.win->ptr,
+		   DestroyNotify, NoEventMask, mlx_loop_end,
+		   data->visual.mlx_ptr);
+  mlx_key_hook(data->visual.active.win->ptr, keyhooks, data);
+//   mlx_loop_hook(data.visual.mlx_ptr, get_me_some_pretty_images, &data);
   if (DEBUG)
   	printf("Display: %ix%i || Window: %ix%i (%ipx)\n",\
 		data->visual.dsp_size.x, data->visual.dsp_size.y,

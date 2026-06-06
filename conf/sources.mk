@@ -18,8 +18,8 @@ HEADER		?= include/Retro_MFA.h
 # ---------------------------------------------------------------------------- #
 
 # Give File names relative to SRC_ROOT directory
-SRC_MAN		?= main.c init.c cleanup.c read.c test_image.c convert.c magic.c\
-			   test_rawdata.c
+SRC_MAN		?= main.c init.c cleanup.c read.c convert.c magic.c render.c\
+			   test_rawdata.c test_image.c 
 SRC_BON		?= 
 
 # Pattern for source files in subdirectories. WITH DIR SLASH
