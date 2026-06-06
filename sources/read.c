@@ -26,6 +26,19 @@ static bool validate_fourbytes(
 	return (true);
 }
 
+uint32_t build_int(t_byte *buf, ssize_t bytes_read, ssize_t *offset)
+{
+	if (bytes_read < *offset + 4)
+		exit(1); // FIXME
+	uint32_t number = 
+		buf[*offset + 3] << 24 |
+		buf[*offset + 2] << 16 |
+		buf[*offset + 1] << 8 |
+		buf[*offset];
+	*offset += 4;
+	return ((uint32_t) number);
+}
+
 static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset)
 {
 	// 1) initial check for file id
@@ -38,7 +51,10 @@ static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offse
 	validate_fourbytes(file_buf, bytes_read, offset, (uint8_t[4]){MAGIC_2});
 	validate_fourbytes(file_buf, bytes_read, offset, (uint8_t[4]){MAGIC_3});
 	// 3) skip over tile, path, filler...
-
+	uint32_t num;
+	num = build_int(file_buf, bytes_read, offset);
+	printf("got a length: %i \n", num);
+	*offset += num;
 	// need to advance in sequence: read length, advance offset repeat a few times
 	// OLD CODE
 	{
