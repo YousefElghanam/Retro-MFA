@@ -45,6 +45,7 @@ typedef struct s_debug
 {
 	unsigned int frame;
 	unsigned int pixels;
+	unsigned int images;
 } t_debug;
 
 typedef struct s_sprite

@@ -103,5 +103,6 @@ void single_sprite_test(t_data* data, ssize_t adress)
 			off.x += sprite.width;
 		}
 	}
+	data->dinfo.images++;
 	data->offset += sprite.size;
 }

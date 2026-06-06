@@ -5,7 +5,7 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 	uint8_t sequence[6] = {ASSET_HEADER_SEQUENCE};
 	t_byte *buf;
 	t_sprite sprite;
-	int assets_found = 0;
+	static int assets_found = 0;
 	// printf("%s: offset %zu bytes read %zu\n", __FUNCTION__, *og_off, bytes_read);
 	for (; *offset + ASSET_HEADER_SIZE < bytes_read;
 		 (*offset)++)
@@ -45,5 +45,6 @@ void get_me_some_pretty_images(t_data* data)
 			break ;
 		single_sprite_test(data, addr);
 	}
+	printf("rendered %i images\n", data->dinfo.images);
 	rnd_frame(data);
 }
