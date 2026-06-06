@@ -83,8 +83,13 @@ void single_sprite_test(t_data* data, ssize_t adress)
 	{
 		color = 0;
 		col_encoded = 0;
+		if (adress + i >= data->bytes_read)
+		{
+			data->offset += sprite.size;
+			return ;
+		}
 		col_encoded = build_2_bytes_int(&data->file_buf[adress + i]);
-		color = col_encoded | data->file_buf[adress + i + frame] << 24;
+		color = col_encoded;
 		mlxu_pixel_put_buffer(&data->visual, px.x + off.x, px.y + off.y, color);
 		advance_px(&px, sprite.width - 1);
 		if (px.y == sprite.height - 1 && px.x == sprite.width - 1)
