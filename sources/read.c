@@ -26,6 +26,40 @@ static bool validate_fourbytes(
 	return (true);
 }
 
+static void find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *og_off)
+{
+	uint8_t sequence[6] = {ASSET_HEADER_SEQUENCE};
+	t_byte *buf;
+	t_sprite sprite;
+	int assets_found = 0;
+	// printf("%s: offset %zu bytes read %zu\n", __FUNCTION__, *og_off, bytes_read);
+	for (ssize_t offset = *og_off;
+		 offset + ASSET_HEADER_SIZE < bytes_read;
+		 offset++)
+	{
+		buf = &file_buf[offset];
+		if (memcmp(&buf[2], sequence, 6))
+			continue;
+		// printf("%s got a sequence\n", __FUNCTION__);
+		// check MUST FILLED bytes for valid asset
+		if (buf[0] && buf[1] && buf[8] && buf[9] && buf[12] && buf[14] && buf[16] && buf[17])
+		{
+			// printf("\tfound an asset\n");
+			sprite.width = build_2_bytes_int(&buf[12]);
+			sprite.height = build_2_bytes_int(&buf[14]);
+			sprite.size = build_4_bytes_int(&buf[8]);
+			// if (sprite.width > 25 && sprite.height > 25)
+			if (sprite.size > 2000 && sprite.size < 200000)
+			{
+				printf("sprite data @0x%.2X: %ix%i (%i bytes)\n",
+					(unsigned int) offset, sprite.width, sprite.height, sprite.size);
+				assets_found++;
+			}
+		}
+	}
+	printf("%s located %i valid headers\n", __FUNCTION__, assets_found);
+}
+
 
 static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset)
 {
@@ -47,12 +81,13 @@ static bool validate_header(t_byte *file_buf, ssize_t bytes_read, ssize_t *offse
 	}
 	// 4) skip the unknown data block 
 	*offset += 9*4 + 1024; // TODO why does it need 9*4 and not 8*4?
+	find_assets(file_buf, bytes_read, offset);
 	// 5) skipping more unknown data block (icons?)
-	*offset += 15540; // first big noise range
-	*offset += 47008; // second larger noise range
-	*offset += 26434; // skipped until assets?? where in white 2 big chunks of data appear 54 times
-	num = build_4_bytes_int(&file_buf[*offset]);
-	*offset += 4 + num;
+	// *offset += 15540; // first big noise range
+	// *offset += 47008; // second larger noise range
+	// *offset += 26434; // skipped until assets?? where in white 2 big chunks of data appear 54 times
+	// num = build_4_bytes_int(&file_buf[*offset]); // TODO is this the 4 byte sequence BEFORE the 32 byte?
+	// *offset += 4 + num;
 	return (true);
 }
 
