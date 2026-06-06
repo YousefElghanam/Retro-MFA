@@ -25,6 +25,10 @@
 #define EMPTY_FOUR_BYTES 0x00, 0x00, 0x00, 0x00
 #define MFA_ENDOFHEADER 0x00, 0xF8, 0x00, 0x00, 0xE0, 0x07, 0x00, 0x00, 0x1F, 0x00, 0x00, 0x00
 
+#define ASSET_HEADER_WHITE2 32
+#define ASSET_HEADER_POS_WIDTH 12
+#define ASSET_HEADER_POS_HEIGHT 14
+
 #ifndef DEBUG
 # define DEBUG 0
 #endif
@@ -58,6 +62,7 @@ typedef struct s_data
 
 bool init(t_data *data, char *file);
 bool read_file(t_data *data);
+void get_asset_data(t_data* data, ssize_t adress);
 int cleanup(t_data *data, int res, char *err_msg);
 
 // -----------------------------------------------------------------------------
