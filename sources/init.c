@@ -1,4 +1,4 @@
-#include "Retro_MFA.h"
+#include "../include/Retro_MFA.h"
 
 bool init(t_data *data, char *file) {
   memset(data, 0, sizeof (t_data));

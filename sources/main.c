@@ -1,4 +1,4 @@
-#include "Retro_MFA.h"
+#include "../include/Retro_MFA.h"
 
 int main(int argc, char **argv) {
   if (argc != 2) {
