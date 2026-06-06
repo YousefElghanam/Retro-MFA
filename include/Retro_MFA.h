@@ -18,6 +18,9 @@
 
 #define FRAME_SLEEPTIME 3000000
 
+#define MFA_FILEID 0x4d, 0x4d, 0x46, 0x32, 0x04
+#define MFA_ENDOFHEADER 0x00
+
 #ifndef DEBUG
 # define DEBUG 0
 #endif
