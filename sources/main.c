@@ -16,6 +16,7 @@ int main(int argc, char **argv) {
 //   	visual_test(&data);
 //   rnd_frame(&data);
   read_file(&data);
+  get_me_some_pretty_images(&data);
 //   single_sprite_test(&data, 0x178A7);
 //   single_sprite_test(&data, 0x1F29F);
 //   single_sprite_test(&data, 0x22923);
