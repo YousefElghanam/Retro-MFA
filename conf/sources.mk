@@ -18,7 +18,7 @@ HEADER		?= include/Retro_MFA.h
 # ---------------------------------------------------------------------------- #
 
 # Give File names relative to SRC_ROOT directory
-SRC_MAN		?= main.c init.c cleanup.c\
+SRC_MAN		?= main.c init.c cleanup.c read.c\
 			   test_rawdata.c
 SRC_BON		?= 
 

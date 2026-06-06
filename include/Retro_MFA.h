@@ -18,7 +18,11 @@
 
 #define FRAME_SLEEPTIME 3000000
 
-#define MFA_FILEID 0x4d, 0x4d, 0x46, 0x32, 0x04
+#define MFA_FILEID 0x4d, 0x4d, 0x46, 0x32
+#define MAGIC_1 0x04, 0x00, 0x00, 0x00
+#define MAGIC_2 0x03, 0x00, 0x00, 0x00
+#define MAGIC_3 0xF8, 0x00, 0x00, 0x00
+#define EMPTY_FOUR_BYTES 0x00, 0x00, 0x00, 0x00
 #define MFA_ENDOFHEADER 0x00, 0xF8, 0x00, 0x00, 0xE0, 0x07, 0x00, 0x00, 0x1F, 0x00, 0x00, 0x00
 
 #ifndef DEBUG
@@ -53,6 +57,7 @@ typedef struct s_data
 // -----------------------------------------------------------------------------
 
 bool init(t_data *data, char *file);
+bool read_file(t_data *data);
 int cleanup(t_data *data, int res, char *err_msg);
 
 // -----------------------------------------------------------------------------
