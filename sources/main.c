@@ -16,8 +16,8 @@ int main(int argc, char **argv) {
 //   	visual_test(&data);
 //   rnd_frame(&data);
   read_file(&data);
-  get_asset_data(&data, 0x25FA7);
-  get_asset_data(&data, 0x3DD43);
+  single_sprite_test(&data, 0x25FA7);
+  single_sprite_test(&data, 0x3DD43);
   //   open_window(file_buf);
   return (cleanup(&data, 0, NULL));
 }

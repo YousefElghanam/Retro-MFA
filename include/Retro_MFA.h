@@ -10,7 +10,7 @@
 #include <string.h> // memset
 #include "mlx_utils.h"
 
-#define BUFFER_SIZE 1024 * 1024
+#define BUFFER_SIZE 1024 * 1024 * 10 // 10 MiB
 
 #define W 300//320//1920
 #define H 640//480//1080
@@ -68,7 +68,6 @@ typedef struct s_data
 
 bool init(t_data *data, char *file);
 bool read_file(t_data *data);
-void get_asset_data(t_data* data, ssize_t adress);
 int cleanup(t_data *data, int res, char *err_msg);
 
 // -----------------------------------------------------------------------------
@@ -78,5 +77,7 @@ int cleanup(t_data *data, int res, char *err_msg);
 void visual_test(t_data *data);
 void prt_frameinfo(t_debug* dinfo);
 void rnd_frame(t_data *data);
+
+void single_sprite_test(t_data* data, ssize_t adress);
 
 #endif /* RETRO_MFA_H */
