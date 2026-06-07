@@ -1,4 +1,0 @@
-1. The textures could be compressed, meaning the binary data do not represent
-    actual pixel information (needs to be uncompressed first)
-
-2. 
