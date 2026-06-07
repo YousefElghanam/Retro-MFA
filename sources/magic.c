@@ -14,6 +14,10 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 	uint8_t sequence[6] = {ASSET_HEADER_SEQUENCE};
 	t_byte *buf;
 	static int assets_found = 0;
+	// FIXME this currently gets interrupted too soon, when buffer is fully read but file is not
+	// FIXME could be fixed together with the list idea for the mlx imagebuffers
+	// TODO also requires asset detection (size based) to be adjusted by filename or something
+	//		or different header sequence - blue looks like i get all individual frames of an asset
 	for (; *offset + ASSET_HEADER_SIZE < bytes_read;
 		 (*offset)++)
 	{
@@ -27,8 +31,9 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 			// if (sprite->width > 25 && sprite->height > 25)
 			if (sprite->size > 2000 && sprite->size < 200000)
 			{
-				printf("sprite data @0x%.2X: %ix%i (%i bytes)\n",
-					(unsigned int) *offset, sprite->width, sprite->height, sprite->size);
+				printf("sprite data @0x%.2X (%zu): %ix%i (%i bytes)\n",
+					(unsigned int) *offset, *offset,
+					sprite->width, sprite->height, sprite->size);
 				assets_found++;
 				(*offset) += 32;
 				return (*offset);
