@@ -9,7 +9,7 @@ bool init(t_data *data, char *file) {
   }
   if (mlxu_setup_new_display(&data->visual) != 0)
   	return (false);
-  if (mlxu_setup_new_win(&data->visual, TITLE, (t_mlxu_2d){W,H,0}) != 0)
+  if (mlxu_setup_new_win(&data->visual, file, (t_mlxu_2d){W,H,0}) != 0)
   	return (false);
   if (mlxu_setup_new_buffer(&data->visual) != 0)
     return (false);

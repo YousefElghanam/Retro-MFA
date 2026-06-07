@@ -74,6 +74,6 @@ bool read_file(t_data *data) {
 	header_validated = true;
   }
   if (data->bytes_read == 0)
-	return (false);
+	  return (false);
   return (true);
 }

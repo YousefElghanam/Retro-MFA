@@ -1,16 +1,5 @@
 #include "../include/Retro_MFA.h"
 
-void advance_px(t_mlxu_2d* px, int max_x)
-{
-	if (px->x == max_x)
-	{
-		px->x = 0;
-		px->y++;
-	}
-	else
-		px->x++;
-}
-
 void visual_test(t_data *data)
 // void visual_test(t_byte* file_buf, t_mlxu* visual, t_mlxu_2d* px, t_debug* dinfo)
 {

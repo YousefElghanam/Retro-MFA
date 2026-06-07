@@ -1,4 +1,5 @@
-#include "Retro_MFA.h"
+#include "../include/Retro_MFA.h"
+#include <stdint.h>
 
 static t_sprite get_asset_data(t_byte* buf)
 {
@@ -33,9 +34,10 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 				// if (sprite->width > 25 && sprite->height > 25)
 				if (sprite->size > 2000 && sprite->size < 200000)
 				{
-					printf("  sprite data @0x%.2X (%zu): %ix%i (%i bytes)\n",
+          sprite->col_encoding = build_2_bytes_int(&buf[16]);
+					printf("  sprite data @0x%.2X (%zu): %ix%i (%i bytes). col_encoding(%u)\n",
 						(unsigned int) *offset, *offset,
-						sprite->width, sprite->height, sprite->size);
+						sprite->width, sprite->height, sprite->size, sprite->col_encoding);
 					assets_found++;
 					(*offset) += 32;
 					return (*offset);
@@ -76,7 +78,7 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 	// printf("\tnew rendering offset: (%ix%i)\n", offset->x, offset->y);	
 }
 
-static void advance_px(t_mlxu_2d* px, int max_x)
+void advance_px(t_mlxu_2d* px, int max_x)
 {
 	if (px->x == max_x)
 	{
@@ -94,14 +96,14 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	ssize_t px_in_img;
 	int color;
 	static int ymax;
-	px_in_img = sprite->width * sprite->height * 2; // FIXME 2 is based on white2
+	px_in_img = sprite->width * sprite->height * (2 + (sprite->col_encoding == 4100));
 	if (adress + px_in_img >= data->bytes_read)
 		return ;
 	update_img_offset(data, sprite, &off, &ymax);
-	for (ssize_t i = 0; i < px_in_img; i += 2) // FIXME 2 is based on white2
+	for (ssize_t i = 0; i < px_in_img; i += (2 + (sprite->col_encoding == 4100)))
 	{
 		color = 0;
-		color = get_color(data->file_buf, adress + i);
+		color = get_color(data->file_buf, adress + i, sprite);
 		mlxu_pixel_put_buffer(&data->visual, px.x + off.x, px.y + off.y, color);
 		// for debugging, higlight last row in RED
 		// if (px.y == sprite->height - 1)
@@ -118,7 +120,7 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 int get_me_some_pretty_images(t_data* data)
 {
 	ssize_t addr = 0;
-	t_sprite sprite = {0,0,0};
+	t_sprite sprite = {0,0,0, 0};
 	while (data->offset < data->bytes_read)
 	{
 		addr = find_assets(data->file_buf, data->bytes_read, &data->offset, &sprite);
