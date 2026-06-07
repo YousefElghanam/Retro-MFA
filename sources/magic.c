@@ -119,6 +119,7 @@ int get_me_some_pretty_images(t_data* data)
 {
 	ssize_t addr = 0;
 	t_sprite sprite = {0,0,0};
+	static t_mlxu_img *prev = NULL;
 	while (data->offset < data->bytes_read)
 	{
 		addr = find_assets(data->file_buf, data->bytes_read, &data->offset, &sprite);
@@ -131,8 +132,14 @@ int get_me_some_pretty_images(t_data* data)
 	// if one full frame of the image can actually fit the window
 	printf("rendered %i images in %p\n",
 		data->dinfo.images, data->visual.active.img_node);
+	// counting number of pages created
+	if (prev != data->visual.active.img)
+	{
+		data->dinfo.pages++;
+		prev = data->visual.active.img;
+	}
+	// reset some stuff
 	data->offset = 0;
 	data->dinfo.images = 0;
-	data->dinfo.total++;
 	return (0);
 }
