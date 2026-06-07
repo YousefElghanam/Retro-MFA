@@ -12,17 +12,24 @@ int main(int argc, char **argv) {
   t_data data;
   if (!init(&data, argv[1]))
   	return (cleanup(&data, 2, "Error setting everything up.\n"));
-  while (read_file(&data)) // TODO state handling, bad file header etc. on parsing? the render call after loop
-  	get_me_some_pretty_images(&data);
-//   	visual_test(&data);
-  if (data.dinfo.pages)
+  while (data.res == RES_OK)
   {
-	  rnd_frame(&data);
-	  printf("total pages: %i\n", data.dinfo.pages);
-	  printf("\nusage:\n"
-			 "   press cursor keys to move between pages\n"
-			 "   press 'q' or 'esc' to quit\n\n");
-	  mlx_loop(data.visual.mlx_ptr);
+	read_file(&data);
+	get_me_some_pretty_images(&data);
+  }
+  if (data.res == RES_DONE)
+  {
+	if (data.dinfo.pages)
+	{
+		rnd_frame(&data);
+		printf("total pages: %i\n", data.dinfo.pages);
+		printf("\nusage:\n"
+				"   press cursor keys to move between pages\n"
+				"   press 'q' or 'esc' to quit\n\n");
+		mlx_loop(data.visual.mlx_ptr);
+	}
+	else
+		printf("No images found.\n");
   }
   return (cleanup(&data, 0, NULL));
 }

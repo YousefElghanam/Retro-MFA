@@ -57,7 +57,7 @@ static bool validate_header(t_byte *buf, ssize_t b_read, ssize_t *offset)
 	return (true);
 }
 
-bool read_file(t_data *data) {
+void read_file(t_data *data) {
   static bool header_validated;
   data->bytes_read = read(data->fd, data->file_buf, BUFFER_SIZE);
   if (DEBUG) {
@@ -71,11 +71,12 @@ bool read_file(t_data *data) {
 	if (!validate_header(data->file_buf, data->bytes_read, &data->offset))
 	{
 		dprintf(STDERR_FILENO, "Error: MFA header broken\n");
-		return (false);
+		data->res = RES_ERR;
+		return;
 	}
 	header_validated = true;
   }
   if (data->bytes_read == 0)
-	return (false);
-  return (true);
+  	data->res = RES_DONE;
+// 	return (false);
 }

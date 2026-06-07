@@ -70,7 +70,8 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 		printf("  window buffer full, creating new buffer...\n");
 		data->dinfo.images = 0;
 		// FIXME error check
-		mlxu_setup_new_buffer(&data->visual);
+		if (mlxu_setup_new_buffer(&data->visual) != 0)
+			data->res = RES_ERR;
 		offset->y = SPACING;
 	}
 	// printf("\tnew rendering offset: (%ix%i)\n", offset->x, offset->y);	
@@ -98,6 +99,8 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	if (adress + px_in_img >= data->bytes_read)
 		return ;
 	update_img_offset(data, sprite, &off, &ymax);
+	if (data->res != RES_OK)
+		return ;
 	for (ssize_t i = 0; i < px_in_img; i += 2) // FIXME 2 is based on white2
 	{
 		color = 0;
@@ -115,12 +118,14 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	data->dinfo.images++;
 }
 
-int get_me_some_pretty_images(t_data* data)
+void get_me_some_pretty_images(t_data* data)
 {
 	ssize_t addr = 0;
 	t_sprite sprite = {0,0,0};
 	static t_mlxu_img *prev = NULL;
-	while (data->offset < data->bytes_read)
+	if (data->res != RES_OK)
+		return;
+	while (data->res == RES_OK && data->offset < data->bytes_read)
 	{
 		addr = find_assets(data->file_buf, data->bytes_read, &data->offset, &sprite);
 		if (addr == 0)
@@ -135,11 +140,11 @@ int get_me_some_pretty_images(t_data* data)
 	// counting number of pages created
 	if (prev != data->visual.active.img)
 	{
-		data->dinfo.pages++;
+		if (data->dinfo.images)
+			data->dinfo.pages++;
 		prev = data->visual.active.img;
 	}
 	// reset some stuff
 	data->offset = 0;
 	data->dinfo.images = 0;
-	return (0);
 }

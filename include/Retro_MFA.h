@@ -47,6 +47,13 @@
 
 typedef uint8_t t_byte;
 
+typedef enum e_state
+{
+	RES_OK,
+	RES_DONE,
+	RES_ERR
+} t_state;
+
 typedef struct s_debug
 {
 	unsigned int frame;
@@ -70,6 +77,7 @@ typedef struct s_data
 	t_mlxu visual;
 	t_mlxu_2d px;
 	t_debug dinfo;
+	t_state res;
 } t_data;
 
 // -----------------------------------------------------------------------------
@@ -77,9 +85,9 @@ typedef struct s_data
 // -----------------------------------------------------------------------------
 
 bool init(t_data *data, char *file);
-bool read_file(t_data *data);
+void read_file(t_data *data);
 int keyhooks(int key, void* param);
-int get_me_some_pretty_images(t_data* data);
+void get_me_some_pretty_images(t_data* data);
 int get_color(t_byte* buf, ssize_t offset);
 uint16_t build_2_bytes_int(t_byte* buf);
 uint32_t build_4_bytes_int(t_byte *buf);
