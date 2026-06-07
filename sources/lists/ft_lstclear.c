@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 10:20:25 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/05 21:16:25 by mweghofe         ###   ########.fr       */
+/*   Created: 2024/09/19 11:41:43 by mweghofe          #+#    #+#             */
+/*   Updated: 2026/06/07 02:56:03 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_utils.h"
+#include "lists.h"
 
 /*
-	Allocates and returns a new node with the given content,
-	initializing next to NULL.
+	Deletes and frees current and all successor nodes of LST
+	using DEL for the content and setting the head pointer to NULL.
 */
-t_list	*ft_lstnew(void *content)
+
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list	*new;
+	t_list	*next;
 
-	new = malloc(sizeof (t_list));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		next = (**lst).next;
+		ft_lstdelone(*lst, del);
+		*lst = next;
+	}
+	*lst = NULL;
 }
-
-// note: *content may be empty -> that is okay

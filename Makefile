@@ -27,7 +27,7 @@ include $(MK_DIR)sources.mk
 CC				?= cc
 # only other special flags that are not -W..., sanitizer or valgrind!
 # can stay empty
-CFLAGS_OTHER	?=
+CFLAGS_OTHER	?= 
 # standard libraries (NOT LIBFT!) go here: -lname -lname
 LIBS			?= -lmlx -lXext -lX11
 #
@@ -37,9 +37,9 @@ USE_LIBFT		?= 0
 LFT_ROOT		:= lib/libft/
 # ----------------------------------------------------------------------------
 # arguments for executing the program in the various modes
-RUN_ARGS_reg	?= MFA/white2.mfa
-RUN_ARGS_asan	?= MFA/white2.mfa
-RUN_ARGS_val	?= MFA/white2.mfa
+RUN_ARGS_reg	?= MFA/white4.mfa
+RUN_ARGS_asan	?= MFA/white4.mfa
+RUN_ARGS_val	?= MFA/white4.mfa
 # ----------------------------------------------------------------------------
 VALGRIND_FLAGS	?=	--leak-check=full \
 					--show-leak-kinds=all --errors-for-leak-kinds=all\

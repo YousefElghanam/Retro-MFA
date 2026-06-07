@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:26:13 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/05 21:00:55 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 20:28:13 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include "lists.h"
+
+#ifndef DEBUG
+# define DEBUG 0
+#endif
 
 // -----------------------------------------------------------------------------
 // environment macros
@@ -144,29 +149,6 @@
 */
 
 // -----------------------------------------------------------------------------
-// libft requirements (w/o libft)
-// -----------------------------------------------------------------------------
-
-// structure for singly linked list with pointers for CONTENT and NEXT
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}	t_list;
-
-// Initializes .content with CONTENT and .next with NULL.
-t_list		*ft_lstnew(void *content);
-// Returns the last node of LST
-t_list		*ft_lstlast(t_list *lst);
-// Adds the node NEW at the end of LST.
-void		ft_lstadd_back(t_list **lst, t_list *new);
-// Deletes .content of node LST with function DEL and frees the node itself.
-void		ft_lstdelone(t_list *lst, void (*del)(void *));
-// Deletes and frees the given node LST and all successors.
-// Uses DEL to clear .content. 
-void		ft_lstclear(t_list **lst, void (*del)(void *));
-
-// -----------------------------------------------------------------------------
 // datatypes
 // -----------------------------------------------------------------------------
 
@@ -188,6 +170,7 @@ typedef struct s_mlxu_color
 typedef struct s_mlxu_img
 {
 	void		*ptr;
+	void		*mlx_ptr;
 	void		*mem;
 	int			bits_pixel;
 	int			bytes_line;
@@ -210,6 +193,7 @@ typedef struct s_mlxu_active
 {
 	t_mlxu_win	*win;
 	t_mlxu_img	*img;
+	t_list_dl	*img_node;
 }	t_mlxu_active;
 
 typedef struct s_mlxu
@@ -217,6 +201,7 @@ typedef struct s_mlxu
 	void			*mlx_ptr;
 	t_mlxu_2d		dsp_size;
 	t_list			*windows;
+	t_list_dl		*images;
 	t_mlxu_active	active;
 }	t_mlxu;
 
@@ -229,6 +214,9 @@ int		mlxu_setup_new_display(t_mlxu *env);
 // Creates a new window in the current X environment with a double image buffer.
 // Multiple windows can be created. The lastes one is env->active.win.
 int		mlxu_setup_new_win(t_mlxu *env, char *title, t_mlxu_2d size);
+// Creates a new ready-to-use image buffer to be added to fully rendered images.
+// Images are organizes as circulat double linked lists. Acive one is saved.
+int mlxu_setup_new_buffer(t_mlxu *env);
 // Create a ready-to-use buffer from an XPM file
 int		mlxu_create_buffer_from_xpm(t_mlxu *env, t_mlxu_img *buffer,
 			char *path);

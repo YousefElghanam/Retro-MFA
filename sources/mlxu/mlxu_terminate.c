@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:11:40 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/05 21:16:25 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 04:05:42 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,26 @@ static void	mlxu_terminate_windows(t_mlxu *env)
 	env->active.img = NULL;
 }
 
+static void mlxu_clear_image(void *image)
+{
+	t_mlxu_img	*content;
+
+	content = image;
+	if (content)
+	{
+		mlx_destroy_image(content->mlx_ptr, content->ptr);
+		free(content);
+	}
+	content = NULL;
+}
+
+static void mlxu_terminate_images(t_mlxu *env)
+{
+	if (env->images)
+		lstclear_cdl(&env->images, mlxu_clear_image);
+	env->active.img = NULL;
+}
+
 int	mlxu_terminate(t_mlxu *env, char *msg)
 {
 	int	err;
@@ -49,6 +69,8 @@ int	mlxu_terminate(t_mlxu *env, char *msg)
 		return (err);
 	if (env->windows)
 		mlxu_terminate_windows(env);
+	if (env->images)
+		mlxu_terminate_images(env);
 	mlx_destroy_display(env->mlx_ptr);
 	free(env->mlx_ptr);
 	env->mlx_ptr = NULL;
