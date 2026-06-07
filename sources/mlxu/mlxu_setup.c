@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:11:09 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/07 04:19:21 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 20:27:54 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int mlxu_setup_new_buffer(t_mlxu *env)
 	img->mlx_ptr = env->mlx_ptr;
 	env->active.img = img;
 	env->active.img_node = node;
-	printf("new img buffer node %p img %p\n", node, img->ptr);
+	if (DEBUG)
+		printf("new img buffer node %p img %p\n", node, img->ptr);
 	lstadd_back_cdl(&env->images, node);
 	return (0);
 }

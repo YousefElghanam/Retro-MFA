@@ -152,6 +152,11 @@ void set_skip(t_manual *skip)
 	skip[4].addr = 0x797A5;
 	skip[5].byte0 = build_4_bytes_int((uint8_t[4]){0x11, 0xCF, 0x00, 0x00});
 	skip[5].addr = 0xA39FC;
+	// these are the 2 for transparancy
+	// skip[6].byte0 = build_4_bytes_int((uint8_t[4]){0x15, 0xF1, 0x00, 0x00});
+	// skip[6].addr = 0xCBDF3;
+	// skip[7].byte0 = build_4_bytes_int((uint8_t[4]){0xD5, 0x63, 0x00, 0x00});
+	// skip[7].addr = 0xD83D5;
 }
 
 bool init(t_data *data, char *file) {
@@ -171,7 +176,6 @@ bool init(t_data *data, char *file) {
 		   DestroyNotify, NoEventMask, mlx_loop_end,
 		   data->visual.mlx_ptr);
   mlx_key_hook(data->visual.active.win->ptr, keyhooks, data);
-//   mlx_loop_hook(data.visual.mlx_ptr, get_me_some_pretty_images, &data);
   set_flip_alignment(data->manual_alignment);
   set_skip(data->manual_skip);
   if (DEBUG)

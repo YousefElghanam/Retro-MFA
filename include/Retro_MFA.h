@@ -7,7 +7,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <string.h>
 #include <string.h> // memset
 #include <unistd.h>
 
@@ -17,25 +16,18 @@
 #define H 800 // 480//1080
 #define TITLE ".mfa Inspector"
 
-#define FRAME_SLEEPTIME 300
-
 #define MFA_FILEID 0x4d, 0x4d, 0x46, 0x32
 #define MAGIC_1 0x04, 0x00, 0x00, 0x00
 #define MAGIC_2 0x03, 0x00, 0x00, 0x00
 #define MAGIC_3 0xF8, 0x00, 0x00, 0x00
-#define EMPTY_FOUR_BYTES 0x00, 0x00, 0x00, 0x00
-#define MFA_ENDOFHEADER                                                        \
-  0x00, 0xF8, 0x00, 0x00, 0xE0, 0x07, 0x00, 0x00, 0x1F, 0x00, 0x00, 0x00
 
 #define ASSET_HEADER_SEQUENCE 0x00, 0x00, 0x01, 0x00, 0x00, 0x00
-#define ASSET_HEADER_SIZE 32 // validated only with white2 & blue
-#define ASSET_HEADER_POS_WIDTH 12
-#define ASSET_HEADER_POS_HEIGHT 14
+#define ASSET_HEADER_SIZE 32
 #define ASSET_FILLER 240
 #define ASSET_COL_2BYTE 0x1006
 #define ASSET_COL_3BYTE 0x1004
 #define ASSET_MANUAL_ALIGNMENT 77
-#define ASSET_MANUAL_SKIP 6
+#define ASSET_MANUAL_SKIP 8
 
 #define SPACING 8
 

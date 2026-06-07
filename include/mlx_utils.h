@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:26:13 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/07 04:11:20 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 20:28:13 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "lists.h"
+
+#ifndef DEBUG
+# define DEBUG 0
+#endif
 
 // -----------------------------------------------------------------------------
 // environment macros

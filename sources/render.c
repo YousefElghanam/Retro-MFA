@@ -13,7 +13,6 @@ void rnd_frame(t_data *data)
 {
 	prt_frameinfo(&data->dinfo, data->visual.active.img_node);
 	mlxu_flush_buffer(&data->visual);
-	usleep(FRAME_SLEEPTIME);
 }
 
 int keyhooks(int key, void* param)
