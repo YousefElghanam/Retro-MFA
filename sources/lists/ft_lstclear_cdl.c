@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstclear_cdl.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 11:41:43 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/05 21:16:25 by mweghofe         ###   ########.fr       */
+/*   Created: 2025/04/14 21:11:53 by mweghofe          #+#    #+#             */
+/*   Updated: 2026/06/07 02:55:31 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_utils.h"
+#include "lists.h"
 
-/*
-	Deletes and frees current and all successor nodes of LST
-	using DEL for the content and setting the head pointer to NULL.
-*/
-
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+// iterate through list HEAD, clear and free each node, set HEAD to NULL
+void	lstclear_cdl(t_list_dl **head, void (*del)(void *))
 {
-	t_list	*next;
+	t_list_dl	*node;
+	t_list_dl	*next;
 
-	if (!lst || !del)
+	if (!head || !del)
 		return ;
-	while (*lst)
+	node = *head;
+	while (node)
 	{
-		next = (**lst).next;
-		ft_lstdelone(*lst, del);
-		*lst = next;
+		next = node->next;
+		lstdelone_cdl(node, del);
+		node = next;
+		if (node == *head)
+			break ;
 	}
-	*lst = NULL;
+	*head = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:26:13 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/05 21:00:55 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 02:54:47 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include "lists.h"
 
 // -----------------------------------------------------------------------------
 // environment macros
@@ -142,29 +143,6 @@
 #define ColormapChangeMask		(1L<<23)
 #define OwnerGrabButtonMask		(1L<<24)
 */
-
-// -----------------------------------------------------------------------------
-// libft requirements (w/o libft)
-// -----------------------------------------------------------------------------
-
-// structure for singly linked list with pointers for CONTENT and NEXT
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}	t_list;
-
-// Initializes .content with CONTENT and .next with NULL.
-t_list		*ft_lstnew(void *content);
-// Returns the last node of LST
-t_list		*ft_lstlast(t_list *lst);
-// Adds the node NEW at the end of LST.
-void		ft_lstadd_back(t_list **lst, t_list *new);
-// Deletes .content of node LST with function DEL and frees the node itself.
-void		ft_lstdelone(t_list *lst, void (*del)(void *));
-// Deletes and frees the given node LST and all successors.
-// Uses DEL to clear .content. 
-void		ft_lstclear(t_list **lst, void (*del)(void *));
 
 // -----------------------------------------------------------------------------
 // datatypes
