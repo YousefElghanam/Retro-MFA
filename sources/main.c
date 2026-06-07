@@ -16,6 +16,9 @@ int main(int argc, char **argv) {
   	get_me_some_pretty_images(&data);
 //   	visual_test(&data);
   rnd_frame(&data);
+  printf("\nusage:\n"
+		 "   press cursor keys to move between pages\n"
+		 "   press 'q' or 'esc' to quit\n\n");
   mlx_loop(data.visual.mlx_ptr);
   return (cleanup(&data, 0, NULL));
 }
