@@ -163,7 +163,7 @@ bool init(t_data *data, char *file) {
   memset(data, 0, sizeof (t_data));
   data->fd = open(file, O_RDONLY);
   if (data->fd == -1) {
-    dprintf(STDERR_FILENO, "couldn't open file %s\n", file);
+    dprintf(STDERR_FILENO, "Error: couldn't open file %s\n", file);
     return false;
   }
   if (mlxu_setup_new_display(&data->visual) != 0)

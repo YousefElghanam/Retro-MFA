@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
   }
   t_data data;
   if (!init(&data, argv[1]))
-  	return (cleanup(&data, 2, "Error setting everything up.\n"));
+  	return (cleanup(&data, 2, "Error: Couldn't finish setup.\n"));
   while (data.res == RES_OK)
   {
 	read_file(&data);
