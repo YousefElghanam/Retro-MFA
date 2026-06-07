@@ -65,6 +65,7 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 			offset->y = SPACING;
 		}
 	}
+	printf("\tnew rendering offset: (%ix%i)\n", offset->x, offset->y);
 	
 }
 
@@ -87,28 +88,20 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	int color;
 	static int ymax;
 	px_in_img = sprite->width * sprite->height * 2; // TODO 2 is only for here
+	if (adress + px_in_img >= data->bytes_read)
+		return ;
 	update_img_offset(data, sprite, &off, &ymax);
-	// ONE image
 	for (ssize_t i = 0; i < px_in_img; i += 2)
 	{
 		color = 0;
-		if (adress + i >= data->bytes_read)
-		{
-			data->offset += sprite->size;
-			return ;
-		}
 		color = get_color(data->file_buf, adress + i);
 		mlxu_pixel_put_buffer(&data->visual, px.x + off.x, px.y + off.y, color);
 		advance_px(&px, sprite->width - 1);
-		if (px.y == sprite->height - 1 && px.x == sprite->width - 1)
-		{
-			px.x = 0;
-			px.y = 0;
-			off.x += sprite->width;
-		}
 	}
-	data->dinfo.images++;
+	// when rendering done for this image, adjust to the right by this image
 	data->offset += sprite->size;
+	data->dinfo.images++;
+	off.x += sprite->width;
 }
 
 int get_me_some_pretty_images(t_data* data)
