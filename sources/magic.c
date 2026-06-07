@@ -94,11 +94,11 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	ssize_t px_in_img;
 	int color;
 	static int ymax;
-	px_in_img = sprite->width * sprite->height * 2; // TODO 2 is only for here
+	px_in_img = sprite->width * sprite->height * 2; // FIXME 2 is based on white2
 	if (adress + px_in_img >= data->bytes_read)
 		return ;
 	update_img_offset(data, sprite, &off, &ymax);
-	for (ssize_t i = 0; i < px_in_img; i += 2)
+	for (ssize_t i = 0; i < px_in_img; i += 2) // FIXME 2 is based on white2
 	{
 		color = 0;
 		color = get_color(data->file_buf, adress + i);
