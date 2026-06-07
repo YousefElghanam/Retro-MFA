@@ -20,27 +20,29 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 		assets_found = 0;
 		new_cycle = false;
 	}
-	for (; *offset + ASSET_HEADER_SIZE < bytes_read;
-		 (*offset)++)
+	while (*offset + ASSET_HEADER_SIZE < bytes_read)
 	{
 		buf = &file_buf[*offset];
-		if (memcmp(&buf[2], sequence, 6))
-			continue;
-		// check MUST FILLED bytes for valid asset
-		if (buf[0] && buf[1] && buf[8] && buf[9] && buf[12] && buf[14] && buf[16] && buf[17])
+		if (memcmp(&buf[2], sequence, 6) == 0)
 		{
-			*sprite = get_asset_data(buf);
-			// if (sprite->width > 25 && sprite->height > 25)
-			if (sprite->size > 2000 && sprite->size < 200000)
+			// check MUST FILLED bytes for valid asset
+			if (buf[0] && buf[1] && buf[8] && buf[9] &&
+				buf[12] && buf[14] && buf[16] && buf[17])
 			{
-				printf("  sprite data @0x%.2X (%zu): %ix%i (%i bytes)\n",
-					(unsigned int) *offset, *offset,
-					sprite->width, sprite->height, sprite->size);
-				assets_found++;
-				(*offset) += 32;
-				return (*offset);
+				*sprite = get_asset_data(buf);
+				// if (sprite->width > 25 && sprite->height > 25)
+				if (sprite->size > 2000 && sprite->size < 200000)
+				{
+					printf("  sprite data @0x%.2X (%zu): %ix%i (%i bytes)\n",
+						(unsigned int) *offset, *offset,
+						sprite->width, sprite->height, sprite->size);
+					assets_found++;
+					(*offset) += 32;
+					return (*offset);
+				}
 			}
 		}
+		(*offset)++;
 	}
 	printf("%s located %i valid headers\n", __FUNCTION__, assets_found);
 	new_cycle = true;
