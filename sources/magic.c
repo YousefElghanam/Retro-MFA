@@ -50,15 +50,18 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 	if (*ymax < sprite->height - 1)
 		*ymax = sprite->height;
 	offset->x += SPACING;
+	// check if NEXT image doesn't fit in the ROW anymore
 	if (offset->x + sprite->width >= data->visual.active.win->size.x)
 	{
 		offset->x = SPACING;
 		offset->y += *ymax + SPACING;
 		*ymax = 0;
+		// check if NEXT image doesn't fit in the WINDOW anymore
 		if (offset->y + sprite->height >= data->visual.active.win->size.y)
 		{
-			printf("window full, rendering...\n");
-			rnd_frame(data);
+			printf("window buffer full, creating new buffer...\n");
+			// FIXME error check
+			mlxu_setup_new_buffer(&data->visual);
 			offset->y = SPACING;
 		}
 	}
@@ -121,8 +124,7 @@ int get_me_some_pretty_images(t_data* data)
 		render_single_image(data, addr, &sprite);
 	}
 	printf("rendered %i images\n", data->dinfo.images);
-	rnd_frame(data);
-	mlx_loop(data->visual.mlx_ptr);
-	// TODO could store the IMAGE BUFFERS in a list, use arrow hooks to change between all buffers!
+	data->offset = 0;
+	data->dinfo.images = 0;
 	return (0);
 }

@@ -12,10 +12,10 @@ int main(int argc, char **argv) {
   t_data data;
   if (!init(&data, argv[1]))
   	return (cleanup(&data, 2, "Error setting everything up.\n"));
-//   while (read_file(&data)) // TODO state handling, bad file header etc. on parsing? the render call after loop
+  while (read_file(&data)) // TODO state handling, bad file header etc. on parsing? the render call after loop
+  	get_me_some_pretty_images(&data);
 //   	visual_test(&data);
-//   rnd_frame(&data);
-  read_file(&data);
-  get_me_some_pretty_images(&data);
+  rnd_frame(&data);
+  mlx_loop(data.visual.mlx_ptr);
   return (cleanup(&data, 0, NULL));
 }

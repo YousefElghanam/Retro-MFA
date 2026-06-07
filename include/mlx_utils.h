@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:26:13 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/07 03:36:07 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 04:11:20 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ typedef struct s_mlxu_active
 {
 	t_mlxu_win	*win;
 	t_mlxu_img	*img;
+	t_list_dl	*img_node;
 }	t_mlxu_active;
 
 typedef struct s_mlxu
