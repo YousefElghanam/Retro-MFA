@@ -77,19 +77,10 @@ bool init(t_data *data, char *file);
 bool read_file(t_data *data);
 int keyhooks(int key, void* param);
 int get_me_some_pretty_images(t_data* data);
+int get_color(t_byte* buf, ssize_t offset);
 uint16_t build_2_bytes_int(t_byte* buf);
 uint32_t build_4_bytes_int(t_byte *buf);
-int cleanup(t_data *data, int res, char *err_msg);
-
-// -----------------------------------------------------------------------------
-// raw data experiment
-// -----------------------------------------------------------------------------
-
-void advance_px(t_mlxu_2d* px, int max_x);
-
-void visual_test(t_data *data);
 void rnd_frame(t_data *data);
-
-void single_sprite_test(t_data* data, ssize_t adress);
+int cleanup(t_data *data, int res, char *err_msg);
 
 #endif /* RETRO_MFA_H */
