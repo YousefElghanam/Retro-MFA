@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:11:40 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/07 03:26:11 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 04:05:42 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ static void mlxu_clear_image(void *image)
 
 	content = image;
 	if (content)
+	{
 		mlx_destroy_image(content->mlx_ptr, content->ptr);
+		free(content);
+	}
 	content = NULL;
 }
 

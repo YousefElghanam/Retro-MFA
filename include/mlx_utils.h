@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:26:13 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/07 03:23:39 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 03:36:07 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,9 @@ int		mlxu_setup_new_display(t_mlxu *env);
 // Creates a new window in the current X environment with a double image buffer.
 // Multiple windows can be created. The lastes one is env->active.win.
 int		mlxu_setup_new_win(t_mlxu *env, char *title, t_mlxu_2d size);
+// Creates a new ready-to-use image buffer to be added to fully rendered images.
+// Images are organizes as circulat double linked lists. Acive one is saved.
+int mlxu_setup_new_buffer(t_mlxu *env);
 // Create a ready-to-use buffer from an XPM file
 int		mlxu_create_buffer_from_xpm(t_mlxu *env, t_mlxu_img *buffer,
 			char *path);

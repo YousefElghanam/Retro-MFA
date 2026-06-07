@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:11:09 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/07 03:27:29 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 04:07:18 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ int mlxu_setup_new_buffer(t_mlxu *env)
 
 	if (!env->mlx_ptr)
 		return (mlxu_terminate(env, ERR_MLX_PTR));
-	img = mlx_new_image(env->mlx_ptr,
+	img = calloc(1, sizeof (t_mlxu_img));
+	if (!img)
+		return (mlxu_terminate(env, ERR_MLX_IMG));
+	img->ptr = mlx_new_image(env->mlx_ptr,
 		env->active.win->size.x, env->active.win->size.y);
 	if (!img)
 		return (mlxu_terminate(env, ERR_MLX_IMG));
