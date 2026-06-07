@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:11:09 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/05 21:16:25 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 04:19:21 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,40 @@ static int	mlxu_setup_double_buffer(t_mlxu *env)
 	mlxu_setup_buffer_offset(&win->buffer_2);
 	win->buffer_1.size = win->size; // NEW needs validation if it works
 	win->buffer_2.size = win->size; // NEW needs validation if it works
+	return (0);
+}
+
+int mlxu_setup_new_buffer(t_mlxu *env)
+{
+	t_mlxu_img	*img;
+	t_list_dl	*node;
+
+	if (!env->mlx_ptr)
+		return (mlxu_terminate(env, ERR_MLX_PTR));
+	img = calloc(1, sizeof (t_mlxu_img));
+	if (!img)
+		return (mlxu_terminate(env, ERR_MLX_IMG));
+	img->ptr = mlx_new_image(env->mlx_ptr,
+		env->active.win->size.x, env->active.win->size.y);
+	if (!img)
+		return (mlxu_terminate(env, ERR_MLX_IMG));
+	img->mem = mlx_get_data_addr(\
+				img->ptr, \
+				&img->bits_pixel, \
+				&img->bytes_line, \
+				&img->endian);
+	if (!img->mem)
+		return (mlxu_terminate(env, ERR_MLX_IMG));
+	node = lstnew_cdl(img);
+	if (!node)
+		return (mlxu_terminate(env, ERR_MLX_IMG));
+	mlxu_setup_buffer_offset(img);
+	img->size = env->active.win->size;
+	img->mlx_ptr = env->mlx_ptr;
+	env->active.img = img;
+	env->active.img_node = node;
+	printf("new img buffer node %p img %p\n", node, img->ptr);
+	lstadd_back_cdl(&env->images, node);
 	return (0);
 }
 

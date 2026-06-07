@@ -11,6 +11,8 @@ bool init(t_data *data, char *file) {
   	return (false);
   if (mlxu_setup_new_win(&data->visual, TITLE, (t_mlxu_2d){W,H,0}) != 0)
   	return (false);
+  if (mlxu_setup_new_buffer(&data->visual) != 0)
+    return (false);
   mlx_hook(data->visual.active.win->ptr,
 		   DestroyNotify, NoEventMask, mlx_loop_end,
 		   data->visual.mlx_ptr);

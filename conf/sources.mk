@@ -28,8 +28,13 @@ SRC_BON		?=
 #   SRC_PARSER = tokenize.c parse.c
 #   SRC_MAN   += $(addprefix $(DIR_PARSER),$(SRC_PARSER))
 
-  DIR_PARSER = mlxu/
-  SRC_PARSER = ft_lstadd_back.c ft_lstdelone.c ft_lstnew.c mlxu_setup.c \
-			   ft_lstclear.c ft_lstlast.c \
-			   mlxu_buffer.c  mlxu_terminate.c
-  SRC_MAN   += $(addprefix $(DIR_PARSER),$(SRC_PARSER))
+DIR_LISTS  = lists/
+SRC_LISTS  = ft_lstadd_back.c ft_lstdelone.c ft_lstnew.c \
+			 ft_lstclear.c ft_lstlast.c ft_lstnew_cdl.c\
+			 ft_listadd_back_cdl.c ft_lstclear_cdl.c ft_lstdelone_cdl.c
+SRC_MAN   += $(addprefix $(DIR_LISTS),$(SRC_LISTS))
+
+
+DIR_MLXU   = mlxu/
+SRC_MLXU   = mlxu_setup.c mlxu_buffer.c  mlxu_terminate.c
+SRC_MAN   += $(addprefix $(DIR_MLXU),$(SRC_MLXU))
