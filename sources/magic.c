@@ -56,17 +56,16 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 		offset->x = SPACING;
 		offset->y += *ymax + SPACING;
 		*ymax = sprite->height;
-		// check if NEXT image doesn't fit in the WINDOW anymore
-		if (offset->y + sprite->height >= data->visual.active.win->size.y)
-		{
-			printf("window buffer full, creating new buffer...\n");
-			// FIXME error check
-			mlxu_setup_new_buffer(&data->visual);
-			offset->y = SPACING;
-		}
 	}
-	printf("\tnew rendering offset: (%ix%i)\n", offset->x, offset->y);
-	
+	// check if NEXT image doesn't fit in the WINDOW anymore
+	if (offset->y + sprite->height >= data->visual.active.win->size.y)
+	{
+		printf("window buffer full, creating new buffer...\n");
+		// FIXME error check
+		mlxu_setup_new_buffer(&data->visual);
+		offset->y = SPACING;
+	}
+	// printf("\tnew rendering offset: (%ix%i)\n", offset->x, offset->y);	
 }
 
 static void advance_px(t_mlxu_2d* px, int max_x)
@@ -96,12 +95,16 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 		color = 0;
 		color = get_color(data->file_buf, adress + i);
 		mlxu_pixel_put_buffer(&data->visual, px.x + off.x, px.y + off.y, color);
+		// for debugging, higlight last row in RED
+		// if (px.y == sprite->height - 1)
+		// 	mlxu_pixel_put_buffer(&data->visual, px.x + off.x, px.y + off.y, RED);
 		advance_px(&px, sprite->width - 1);
 	}
 	// when rendering done for this image, adjust to the right by this image
+	off.x += sprite->width;
+	// adjust reading offset in buffer by this assets total read size
 	data->offset += sprite->size;
 	data->dinfo.images++;
-	off.x += sprite->width;
 }
 
 int get_me_some_pretty_images(t_data* data)
