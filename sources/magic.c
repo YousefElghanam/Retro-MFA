@@ -69,7 +69,6 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 			data->dinfo.images, data->visual.active.img_node);
 		printf("  window buffer full, creating new buffer...\n");
 		data->dinfo.images = 0;
-		// FIXME error check
 		if (mlxu_setup_new_buffer(&data->visual) != 0)
 			data->res = RES_ERR;
 		offset->y = SPACING;
@@ -130,7 +129,6 @@ void get_me_some_pretty_images(t_data* data)
 		addr = find_assets(data->file_buf, data->bytes_read, &data->offset, &sprite);
 		if (addr == 0)
 			break ;
-		// FIXME find_assets doesn't trigger "nothing found" for all files
 		render_single_image(data, addr, &sprite);
 	}
 	// this counter can be lower, because find_assets doesn't care

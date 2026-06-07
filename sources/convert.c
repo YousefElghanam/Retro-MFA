@@ -1,9 +1,11 @@
 #include "../include/Retro_MFA.h"
 
+// FIXME all the bytes read must be sure that they CAN read the buffer
+
 uint32_t build_4_bytes_int(t_byte *buf)
 {
 	// if (bytes_read < *offset + 4)
-	// 	exit(1); // FIXME this needs to be somehow done outside perhaps
+	// 	exit(1);
 	uint32_t number = 
 		buf[3] << 24 |
 		buf[2] << 16 |

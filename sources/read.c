@@ -37,23 +37,7 @@ static bool validate_header(t_byte *buf, ssize_t b_read, ssize_t *offset)
 		!validate_fourbytes(buf, b_read, offset, (uint8_t[4]){MAGIC_3})
 	)
 		return (false);
-	// 3) skip over tile, path, filler...
-	uint32_t num;
-	if (*offset + 4 >= b_read)
-		return (false);
-	for (short i = 0; i < 4; i++)
-	{
-		num = build_4_bytes_int(&buf[*offset]);
-		*offset += 4 + num;
-	}
-	// 4) skip the unknown data block 
-	*offset += 9*4 + 1024; // TODO why does it need 9*4 and not 8*4? isn't this obsolete by now?
-	// 5) skipping more unknown data block (icons?)
-	// *offset += 15540; // first big noise range
-	// *offset += 47008; // second larger noise range
-	// *offset += 26434; // skipped until assets?? where in white 2 big chunks of data appear 54 times
-	// num = build_4_bytes_int(&buf[*offset]); // TODO is this the 4 byte sequence BEFORE the 32 byte?
-	// *offset += 4 + num;
+	// 3) all the other data blocks are simply ignored by now
 	return (true);
 }
 
