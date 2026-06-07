@@ -31,6 +31,34 @@ static void prt_header(int assets_found, t_byte *buf)
 	printf("\n");
 }
 
+bool search_skip(t_manual *skip, t_byte *buf, ssize_t adress)
+{
+	ssize_t off = adress - 32; // has to be changed, because header is already added
+	for (int i = 0; i < 1; i++)
+	{
+		printf("%s: addr %zu|%zu ::: bytes %X|%.2X%.2X%.2X%.2X\n",
+			__FUNCTION__, off, skip[i].addr,
+			skip[i].byte0, buf[off + 0], buf[off + 1], buf[off + 2], buf[off + 3]);
+		if (off == skip[i].addr && memcmp(&buf[off], &skip[i].byte0, 4) == 0)
+			return (true);
+	}
+	return (false);
+}
+
+bool search_alignment_flip(t_manual *alignment, t_byte *buf, ssize_t adress)
+{
+	ssize_t off = adress - 32; // has to be changed, because header is already added
+	for (int i = 0; i < 1; i++)
+	{
+		printf("%s: addr %zu|%zu ::: bytes %X|%X%X%X%X\n",
+			__FUNCTION__, off, alignment[i].addr,
+			alignment[i].byte0, buf[off + 0], buf[off + 1], buf[off + 2], buf[off + 3]);
+		if (off == alignment[i].addr && memcmp(&buf[off], &alignment[i].byte0, 4) == 0)
+			return (true);
+	}
+	return (false);
+}
+
 static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset, t_sprite* sprite)
 {
 	uint8_t sequence[6] = {ASSET_HEADER_SEQUENCE};
@@ -123,13 +151,17 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 		return ;
 	update_img_offset(data, sprite, &off, &ymax);
 	if (data->res != RES_OK)
-    return ;
+    	return ;
+	short flip = -1;
+	if (search_alignment_flip(data->manual_alignment, data->file_buf, adress))
+		flip = 0;
+	printf("offset: %zu | addr %zu\n",data->offset, adress);
 	for (ssize_t i = 0; i < px_in_img; i += sprite->col_num_bytes)
 	{
 		color = 0;
 		color = get_color(data->file_buf, adress + i, sprite);
 		mlxu_pixel_put_buffer(&data->visual, px.x + off.x, px.y + off.y, color);
-		advance_px(&px, sprite->width - 1);
+		advance_px(&px, sprite->width + flip);
 	}
 	// when rendering done for this image, adjust to the right by this image
 	off.x += sprite->width;
@@ -150,7 +182,11 @@ void get_me_some_pretty_images(t_data* data)
 		addr = find_assets(data->file_buf, data->bytes_read, &data->offset, &sprite);
 		if (addr == 0)
 			break ;
-		render_single_image(data, addr, &sprite);
+		if (search_skip(data->manual_skip, data->file_buf, addr) == false)
+			render_single_image(data, addr, &sprite);
+		else
+			data->offset += sprite.size;
+		
 	}
 	// this counter can be lower, because find_assets doesn't care
 	// if one full frame of the image can actually fit the window

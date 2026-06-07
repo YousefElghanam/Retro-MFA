@@ -34,6 +34,8 @@
 #define ASSET_FILLER 240
 #define ASSET_COL_2BYTE 0x1006
 #define ASSET_COL_3BYTE 0x1004
+#define ASSET_MANUAL_ALIGNMENT 100
+#define ASSET_MANUAL_SKIP 50
 
 #define SPACING 8
 
@@ -82,7 +84,8 @@ typedef struct s_data {
   t_mlxu_2d px;
   t_debug dinfo;
   t_state res;
-  t_manual manual[100];
+  t_manual manual_alignment[ASSET_MANUAL_ALIGNMENT];
+  t_manual manual_skip[ASSET_MANUAL_SKIP];
 } t_data;
 
 // -----------------------------------------------------------------------------
