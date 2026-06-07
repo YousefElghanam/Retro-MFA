@@ -58,6 +58,12 @@ typedef struct s_debug {
   unsigned int images;
 } t_debug;
 
+typedef struct s_manual
+{
+	uint32_t byte0;
+	ssize_t addr;
+} t_manual;
+
 typedef struct s_sprite {
   uint16_t width;
   uint16_t height;
@@ -76,6 +82,7 @@ typedef struct s_data {
   t_mlxu_2d px;
   t_debug dinfo;
   t_state res;
+  t_manual manual[100];
 } t_data;
 
 // -----------------------------------------------------------------------------

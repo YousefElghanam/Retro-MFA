@@ -11,11 +11,24 @@ static t_sprite get_asset_data(t_byte* buf)
 	s.col_encoding = build_2_bytes_int(&buf[16]);
 	if (s.col_encoding == ASSET_COL_2BYTE)
 		s.col_num_bytes = 2;
-	else //if (s.col_encoding == ASSET_COL_3BYTE)
+	else if (s.col_encoding == ASSET_COL_3BYTE)
 		s.col_num_bytes = 3;
-	// else
-	// 	s.col_num_bytes = 1;
+	else
+		s.col_num_bytes = 2;
 	return (s);
+}
+
+static void prt_header(int assets_found, t_byte *buf)
+{
+	printf("header %d: ", assets_found);
+	for (int i=0; i < 32;i++)
+	{
+		printf("%.2X ", (uint16_t) buf[i]);
+		if (i!=0 && i % 8 == 0)
+			printf(" ");
+
+	}
+	printf("\n");
 }
 
 static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset, t_sprite* sprite)
@@ -34,14 +47,15 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 		buf = &file_buf[*offset];
 		if (memcmp(&buf[2], sequence, 6) == 0)
 		{
-			// check MUST FILLED bytes for valid asset
-			if (buf[0] && buf[1] && buf[8] && buf[9] &&
-				buf[12] && buf[14] && buf[16] && buf[17])
+			// check MUST FILLED bytes for valid asset - w/o get ALL assets
+			// if (buf[0] && buf[1] && buf[8] && buf[9] &&
+			// 	buf[12] && buf[14] && buf[16] && buf[17])
 			{
 				*sprite = get_asset_data(buf);
-				// if (sprite->width > 25 && sprite->height > 25)
-				if (sprite->size > 2000 && sprite->size < 200000)
+				// this helps to get rid of unknown encodings - can stay or go
+				if (sprite->size > 1700 && sprite->size < 200000)
 				{
+					prt_header(assets_found, buf);
 					printf("  sprite @ 0x%.2X (%zu): %ix%i (%i bytes) color 0x%.4X | leading 0x%.4X\n",
 						(unsigned int) *offset, *offset,
 						sprite->width, sprite->height, sprite->size,
