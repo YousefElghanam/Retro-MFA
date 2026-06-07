@@ -34,12 +34,12 @@ static void prt_header(int assets_found, t_byte *buf)
 bool search_skip(t_manual *skip, t_byte *buf, ssize_t adress)
 {
 	ssize_t off = adress - 32; // has to be changed, because header is already added
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < ASSET_MANUAL_SKIP; i++)
 	{
-		printf("%s: addr %zu|%zu ::: bytes %X|%.2X%.2X%.2X%.2X\n",
-			__FUNCTION__, off, skip[i].addr,
-			skip[i].byte0, buf[off + 0], buf[off + 1], buf[off + 2], buf[off + 3]);
-		if (off == skip[i].addr && memcmp(&buf[off], &skip[i].byte0, 4) == 0)
+		// printf("%s: addr %zu|%zu ::: bytes %X|%.2X%.2X%.2X%.2X\n",
+		// 	__FUNCTION__, off, skip[i].addr,
+		// 	skip[i].byte0, buf[off + 0], buf[off + 1], buf[off + 2], buf[off + 3]);
+		if (memcmp(&buf[off], &skip[i].byte0, 4) == 0)
 			return (true);
 	}
 	return (false);
@@ -50,9 +50,9 @@ bool search_alignment_flip(t_manual *alignment, t_byte *buf, ssize_t adress)
 	ssize_t off = adress - 32; // has to be changed, because header is already added
 	for (int i = 0; i < 1; i++)
 	{
-		printf("%s: addr %zu|%zu ::: bytes %X|%X%X%X%X\n",
-			__FUNCTION__, off, alignment[i].addr,
-			alignment[i].byte0, buf[off + 0], buf[off + 1], buf[off + 2], buf[off + 3]);
+		// printf("%s: addr %zu|%zu ::: bytes %X|%X%X%X%X\n",
+		// 	__FUNCTION__, off, alignment[i].addr,
+		// 	alignment[i].byte0, buf[off + 0], buf[off + 1], buf[off + 2], buf[off + 3]);
 		if (off == alignment[i].addr && memcmp(&buf[off], &alignment[i].byte0, 4) == 0)
 			return (true);
 	}
@@ -155,7 +155,6 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	short flip = -1;
 	if (search_alignment_flip(data->manual_alignment, data->file_buf, adress))
 		flip = 0;
-	printf("offset: %zu | addr %zu\n",data->offset, adress);
 	for (ssize_t i = 0; i < px_in_img; i += sprite->col_num_bytes)
 	{
 		color = 0;

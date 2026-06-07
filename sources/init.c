@@ -9,7 +9,17 @@ void set_flip_alignment(t_manual *alignment)
 void set_skip(t_manual *skip)
 {
 	skip[0].byte0 = build_4_bytes_int((uint8_t[4]){0x42, 0x8B, 0x00, 0x00});
-	skip[0].addr = 0x1D15;
+	// skip[0].addr = 0x1D15;
+	skip[1].byte0 = build_4_bytes_int((uint8_t[4]){0xA2, 0x14, 0x00, 0x00});
+	// skip[1].addr = 0x3839;
+	skip[2].byte0 = build_4_bytes_int((uint8_t[4]){0x82, 0x66, 0x00, 0x00});
+	skip[2].addr = 0x1B988;
+	skip[3].byte0 = build_4_bytes_int((uint8_t[4]){0x81, 0x86, 0x00, 0x00});
+	skip[3].addr = 0x1C2FF;
+	skip[4].byte0 = build_4_bytes_int((uint8_t[4]){0x29, 0x64, 0x00, 0x00});
+	skip[4].addr = 0x797A5;
+	skip[5].byte0 = build_4_bytes_int((uint8_t[4]){0x11, 0xCF, 0x00, 0x00});
+	skip[5].addr = 0xA39FC;
 }
 
 bool init(t_data *data, char *file) {
