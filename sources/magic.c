@@ -55,7 +55,7 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 	{
 		offset->x = SPACING;
 		offset->y += *ymax + SPACING;
-		*ymax = 0;
+		*ymax = sprite->height;
 		// check if NEXT image doesn't fit in the WINDOW anymore
 		if (offset->y + sprite->height >= data->visual.active.win->size.y)
 		{
