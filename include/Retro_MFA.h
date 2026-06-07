@@ -31,6 +31,8 @@
 #define ASSET_HEADER_POS_HEIGHT 14
 #define ASSET_FILLER 240
 
+#define SPACING 8
+
 #define DestroyNotify		17
 #define NoEventMask			0L
 

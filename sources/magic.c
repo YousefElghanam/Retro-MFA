@@ -44,16 +44,17 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 	// put everything next to each other
 	if (*ymax < sprite->height - 1)
 		*ymax = sprite->height;
+	offset->x += SPACING;
 	if (offset->x + sprite->width >= data->visual.active.win->size.x)
 	{
-		offset->x = 0;
-		offset->y += *ymax;
+		offset->x = SPACING;
+		offset->y += *ymax + SPACING;
 		*ymax = 0;
 		if (offset->y + sprite->height >= data->visual.active.win->size.y)
 		{
 			printf("window full, rendering...\n");
 			rnd_frame(data);
-			offset->y = 0;
+			offset->y = SPACING;
 		}
 	}
 	
@@ -73,7 +74,7 @@ static void advance_px(t_mlxu_2d* px, int max_x)
 static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 {
 	t_mlxu_2d px = {0,0,0};
-	static t_mlxu_2d off; // to put them next to each other
+	static t_mlxu_2d off = {SPACING, SPACING, 0}; // to put them next to each other
 	ssize_t px_in_img;
 	int color;
 	static int ymax;
