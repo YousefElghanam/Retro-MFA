@@ -157,7 +157,10 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	// some assets have a different line length
 	short flip = -1;
 	if (search_alignment_flip(data->manual_alignment, data->file_buf, adress))
+	{
 		flip = 0;
+		px_in_img += sprite->height * 1 * sprite->col_num_bytes;
+	}
 	// write each pixel of the asses
 	for (ssize_t i = 0; i < px_in_img; i += sprite->col_num_bytes)
 	{
