@@ -4,6 +4,83 @@ void set_flip_alignment(t_manual *alignment)
 {
 	alignment[0].byte0 = build_4_bytes_int((uint8_t[4]){0xD7, 0xB1, 0x00, 0x00});
 	alignment[0].addr = 0x21581;
+	// starting from asset 0 in white1
+	alignment[40].byte0 = build_4_bytes_int((uint8_t[4]){0x42, 0x8B, 0x00, 0x00});
+	alignment[40].addr = 0x1D15;
+	alignment[41].byte0 = build_4_bytes_int((uint8_t[4]){0xA2, 0x14, 0x00, 0x00});
+	alignment[41].addr = 0x3839;
+	alignment[42].byte0 = build_4_bytes_int((uint8_t[4]){0x2B, 0x2D, 0x00, 0x00});
+	alignment[42].addr = 0x11323;
+	alignment[43].byte0 = build_4_bytes_int((uint8_t[4]){0xBB, 0xD9, 0x00, 0x00});
+	alignment[43].addr = 0x1B727;
+	alignment[44].byte0 = build_4_bytes_int((uint8_t[4]){0x68, 0x7B, 0x00, 0x00});
+	alignment[44].addr = 0x2024B;
+	alignment[45].byte0 = build_4_bytes_int((uint8_t[4]){0x53, 0x21, 0x00, 0x00});
+	alignment[45].addr = 0x24D6F;
+	alignment[46].byte0 = build_4_bytes_int((uint8_t[4]){0xF2, 0x57, 0x00, 0x00});
+	alignment[46].addr = 0x29893;
+	alignment[47].byte0 = build_4_bytes_int((uint8_t[4]){0x67, 0x68, 0x00, 0x00});
+	alignment[47].addr = 0x2E3B7;
+	alignment[48].byte0 = build_4_bytes_int((uint8_t[4]){0x97, 0x89, 0x00, 0x00});
+	alignment[48].addr = 0x32EDB;
+	alignment[49].byte0 = build_4_bytes_int((uint8_t[4]){0x57, 0x9E, 0x00, 0x00});
+	alignment[49].addr = 0x379FF;
+	alignment[50].byte0 = build_4_bytes_int((uint8_t[4]){0x29, 0xF0, 0x00, 0x00});
+	alignment[50].addr = 0x3C523;
+	alignment[51].byte0 = build_4_bytes_int((uint8_t[4]){0xF7, 0x40, 0x00, 0x00});
+	alignment[51].addr = 0x41047;
+	alignment[52].byte0 = build_4_bytes_int((uint8_t[4]){0xF4, 0x3A, 0x00, 0x00});
+	alignment[52].addr = 0x45B6B;
+	alignment[53].byte0 = build_4_bytes_int((uint8_t[4]){0x5C, 0x81, 0x00, 0x00});
+	alignment[53].addr = 0x4734F;
+	alignment[54].byte0 = build_4_bytes_int((uint8_t[4]){0x9F, 0x6B, 0x00, 0x00});
+	alignment[54].addr = 0x4B5B3;
+	alignment[55].byte0 = build_4_bytes_int((uint8_t[4]){0xB5, 0xBC, 0x00, 0x00});
+	alignment[55].addr = 0x500D7;
+	alignment[56].byte0 = build_4_bytes_int((uint8_t[4]){0xBA, 0x7D, 0x00, 0x00});
+	alignment[56].addr = 0x54BFB;
+	alignment[57].byte0 = build_4_bytes_int((uint8_t[4]){0x31, 0xB2, 0x00, 0x00});
+	alignment[57].addr = 0x5971F;
+	alignment[58].byte0 = build_4_bytes_int((uint8_t[4]){0x1C, 0xE4, 0x00, 0x00});
+	alignment[58].addr = 0x5E243;
+	alignment[59].byte0 = build_4_bytes_int((uint8_t[4]){0x87, 0xA0, 0x00, 0x00});
+	alignment[59].addr = 0x624A7;
+	alignment[60].byte0 = build_4_bytes_int((uint8_t[4]){0x4E, 0x67, 0x00, 0x00});
+	alignment[60].addr = 0x63C8B;
+	alignment[61].byte0 = build_4_bytes_int((uint8_t[4]){0xDE, 0x82, 0x00, 0x00});
+	alignment[61].addr = 0x687AF;
+	alignment[62].byte0 = build_4_bytes_int((uint8_t[4]){0x07, 0x8A, 0x00, 0x00});
+	alignment[62].addr = 0x6D2D3;
+	alignment[63].byte0 = build_4_bytes_int((uint8_t[4]){0x94, 0x34, 0x00, 0x00});
+	alignment[63].addr = 0x71DF7;
+	alignment[64].byte0 = build_4_bytes_int((uint8_t[4]){0x96, 0x77, 0x00, 0x00});
+	alignment[64].addr = 0x7691B;
+	// the sofa
+	alignment[65].byte0 = build_4_bytes_int((uint8_t[4]){0xD5, 0xF6, 0x00, 0x00});
+	alignment[65].addr = 0x940CF;
+	// now from the ende in reverse
+	alignment[66].byte0 = build_4_bytes_int((uint8_t[4]){0x64, 0x12, 0x00, 0x00});
+	alignment[66].addr = 0xEE43;
+	alignment[67].byte0 = build_4_bytes_int((uint8_t[4]){0x38, 0x94, 0x00, 0x00});
+	alignment[67].addr = 0x617F;
+	alignment[68].byte0 = build_4_bytes_int((uint8_t[4]){0xAD, 0x72, 0x00, 0x00});
+	alignment[68].addr = 0xFE417;
+	alignment[69].byte0 = build_4_bytes_int((uint8_t[4]){0xDC, 0x41, 0x00, 0x00});
+	alignment[69].addr = 0xFB013;
+	alignment[70].byte0 = build_4_bytes_int((uint8_t[4]){0x15, 0x4A, 0x00, 0x00});
+	alignment[70].addr = 0xF75CF;
+	alignment[71].byte0 = build_4_bytes_int((uint8_t[4]){0x53, 0xD4, 0x00, 0x00});
+	alignment[71].addr = 0xE437D;
+	alignment[72].byte0 = build_4_bytes_int((uint8_t[4]){0xA6, 0xD8, 0x00, 0x00});
+	alignment[72].addr = 0xD9DB9;
+	alignment[73].byte0 = build_4_bytes_int((uint8_t[4]){0x78, 0xB5, 0x00, 0x00});
+	alignment[73].addr = 0xD847B;
+	alignment[74].byte0 = build_4_bytes_int((uint8_t[4]){0x19, 0xEC, 0x00, 0x00});
+	alignment[74].addr = 0xD6777;
+	alignment[76].byte0 = build_4_bytes_int((uint8_t[4]){0x55, 0x3C, 0x00, 0x00});
+	alignment[76].addr = 0xD0C6D;
+	alignment[76].byte0 = build_4_bytes_int((uint8_t[4]){0x4E, 0xCA, 0x00, 0x00});
+	alignment[76].addr = 0xBF3EB;
 }
 
 void set_skip(t_manual *skip)

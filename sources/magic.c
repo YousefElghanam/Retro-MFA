@@ -20,7 +20,7 @@ static t_sprite get_asset_data(t_byte* buf)
 
 static void prt_header(int assets_found, t_byte *buf)
 {
-	printf("header %d: ", assets_found);
+	printf("\e[0;34mheader %d: ", assets_found);
 	for (int i=0; i < 32;i++)
 	{
 		printf("%.2X ", (uint16_t) buf[i]);
@@ -48,7 +48,7 @@ bool search_skip(t_manual *skip, t_byte *buf, ssize_t adress)
 bool search_alignment_flip(t_manual *alignment, t_byte *buf, ssize_t adress)
 {
 	ssize_t off = adress - 32; // has to be changed, because header is already added
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < ASSET_MANUAL_ALIGNMENT; i++)
 	{
 		// printf("%s: addr %zu|%zu ::: bytes %X|%X%X%X%X\n",
 		// 	__FUNCTION__, off, alignment[i].addr,
@@ -84,7 +84,7 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 				if (sprite->size > 1700 && sprite->size < 200000)
 				{
 					prt_header(assets_found, buf);
-					printf("  sprite @ 0x%.2X (%zu): %ix%i (%i bytes) color 0x%.4X | leading 0x%.4X\n",
+					printf("\e[0;32m  sprite @ 0x%.2X (%zu): %ix%i (%i bytes) color 0x%.4X | leading 0x%.4X\n\e[0m",
 						(unsigned int) *offset, *offset,
 						sprite->width, sprite->height, sprite->size,
 						sprite->col_encoding, sprite->bytes_0_1);
