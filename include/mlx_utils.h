@@ -6,7 +6,7 @@
 /*   By: mweghofe <mweghofe@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:26:13 by mweghofe          #+#    #+#             */
-/*   Updated: 2026/06/07 02:54:47 by mweghofe         ###   ########.fr       */
+/*   Updated: 2026/06/07 03:23:39 by mweghofe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ typedef struct s_mlxu_color
 typedef struct s_mlxu_img
 {
 	void		*ptr;
+	void		*mlx_ptr;
 	void		*mem;
 	int			bits_pixel;
 	int			bytes_line;
@@ -195,6 +196,7 @@ typedef struct s_mlxu
 	void			*mlx_ptr;
 	t_mlxu_2d		dsp_size;
 	t_list			*windows;
+	t_list_dl		*images;
 	t_mlxu_active	active;
 }	t_mlxu;
 

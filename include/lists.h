@@ -32,8 +32,6 @@ void		ft_lstclear(t_list **lst, void (*del)(void *));
 
 // create new node with given CONTENT
 t_list_dl	*lstnew_cdl(void *content);
-// add NEW node at the front of circular doubly linked list HEAD
-void		lstadd_front_cdl(t_list_dl **head, t_list_dl *new);
 // add NEW node at the back of circular doubly linked list HEAD
 void		lstadd_back_cdl(t_list_dl **head, t_list_dl *new);
 // delete and free content of a NODE using DEL, setting next&prev to NULL

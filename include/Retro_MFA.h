@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <string.h> // memset
 #include "mlx_utils.h"
+#include "lists.h"
 
 #define BUFFER_SIZE 1024 * 1024
 
