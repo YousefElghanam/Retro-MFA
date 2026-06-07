@@ -7,6 +7,7 @@ static t_sprite get_asset_data(t_byte* buf)
 	s.size = build_4_bytes_int(&buf[8]);
 	s.width = build_2_bytes_int(&buf[12]);
 	s.height = build_2_bytes_int(&buf[14]);
+	s.col_encoding = build_2_bytes_int(&buf[16]);
 	return (s);
 }
 
@@ -34,8 +35,7 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 				// if (sprite->width > 25 && sprite->height > 25)
 				if (sprite->size > 2000 && sprite->size < 200000)
 				{
-          sprite->col_encoding = build_2_bytes_int(&buf[16]);
-					printf("  sprite data @0x%.2X (%zu): %ix%i (%i bytes). col_encoding(%u)\n",
+					printf("  sprite @ 0x%.2X (%zu): %ix%i (%i bytes) color 0x%.2X\n",
 						(unsigned int) *offset, *offset,
 						sprite->width, sprite->height, sprite->size, sprite->col_encoding);
 					assets_found++;
