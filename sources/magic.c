@@ -71,8 +71,8 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 			data->dinfo.images, data->visual.active.img_node);
 		printf("  window buffer full, creating new buffer...\n");
 		data->dinfo.images = 0;
-		// FIXME error check
-		mlxu_setup_new_buffer(&data->visual);
+		if (mlxu_setup_new_buffer(&data->visual) != 0)
+			data->res = RES_ERR;
 		offset->y = SPACING;
 	}
 	// printf("\tnew rendering offset: (%ix%i)\n", offset->x, offset->y);	
@@ -100,6 +100,8 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	if (adress + px_in_img >= data->bytes_read)
 		return ;
 	update_img_offset(data, sprite, &off, &ymax);
+	if (data->res != RES_OK)
+    return ;
 	for (ssize_t i = 0; i < px_in_img; i += (2 + (sprite->col_encoding == 4100)))
 	{
 		color = 0;
@@ -117,23 +119,32 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	data->dinfo.images++;
 }
 
-int get_me_some_pretty_images(t_data* data)
+void get_me_some_pretty_images(t_data* data)
 {
 	ssize_t addr = 0;
 	t_sprite sprite = {0,0,0, 0};
-	while (data->offset < data->bytes_read)
+	static t_mlxu_img *prev = NULL;
+	if (data->res != RES_OK)
+		return;
+	while (data->res == RES_OK && data->offset < data->bytes_read)
 	{
 		addr = find_assets(data->file_buf, data->bytes_read, &data->offset, &sprite);
 		if (addr == 0)
 			break ;
-		// FIXME find_assets doesn't trigger "nothing found" for all files
 		render_single_image(data, addr, &sprite);
 	}
 	// this counter can be lower, because find_assets doesn't care
 	// if one full frame of the image can actually fit the window
 	printf("rendered %i images in %p\n",
 		data->dinfo.images, data->visual.active.img_node);
+	// counting number of pages created
+	if (prev != data->visual.active.img)
+	{
+		if (data->dinfo.images)
+			data->dinfo.pages++;
+		prev = data->visual.active.img;
+	}
+	// reset some stuff
 	data->offset = 0;
 	data->dinfo.images = 0;
-	return (0);
 }
