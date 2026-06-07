@@ -13,11 +13,13 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 {
 	uint8_t sequence[6] = {ASSET_HEADER_SEQUENCE};
 	t_byte *buf;
-	static int assets_found = 0;
-	// FIXME this currently gets interrupted too soon, when buffer is fully read but file is not
-	// FIXME could be fixed together with the list idea for the mlx imagebuffers
-	// TODO also requires asset detection (size based) to be adjusted by filename or something
-	//		or different header sequence - blue looks like i get all individual frames of an asset
+	static int assets_found;
+	static bool new_cycle;
+	if (new_cycle)
+	{
+		assets_found = 0;
+		new_cycle = false;
+	}
 	for (; *offset + ASSET_HEADER_SIZE < bytes_read;
 		 (*offset)++)
 	{
@@ -31,7 +33,7 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 			// if (sprite->width > 25 && sprite->height > 25)
 			if (sprite->size > 2000 && sprite->size < 200000)
 			{
-				printf("sprite data @0x%.2X (%zu): %ix%i (%i bytes)\n",
+				printf("  sprite data @0x%.2X (%zu): %ix%i (%i bytes)\n",
 					(unsigned int) *offset, *offset,
 					sprite->width, sprite->height, sprite->size);
 				assets_found++;
@@ -41,6 +43,7 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 		}
 	}
 	printf("%s located %i valid headers\n", __FUNCTION__, assets_found);
+	new_cycle = true;
 	return (0);
 }
 
@@ -60,7 +63,10 @@ static void update_img_offset(t_data* data, t_sprite* sprite, t_mlxu_2d* offset,
 	// check if NEXT image doesn't fit in the WINDOW anymore
 	if (offset->y + sprite->height >= data->visual.active.win->size.y)
 	{
-		printf("window buffer full, creating new buffer...\n");
+		printf("rendered %i images in %p\n",
+			data->dinfo.images, data->visual.active.img_node);
+		printf("  window buffer full, creating new buffer...\n");
+		data->dinfo.images = 0;
 		// FIXME error check
 		mlxu_setup_new_buffer(&data->visual);
 		offset->y = SPACING;
@@ -119,7 +125,10 @@ int get_me_some_pretty_images(t_data* data)
 		// FIXME find_assets doesn't trigger "nothing found" for all files
 		render_single_image(data, addr, &sprite);
 	}
-	printf("rendered %i images\n", data->dinfo.images);
+	// this counter can be lower, because find_assets doesn't care
+	// if one full frame of the image can actually fit the window
+	printf("rendered %i images in %p\n",
+		data->dinfo.images, data->visual.active.img_node);
 	data->offset = 0;
 	data->dinfo.images = 0;
 	return (0);
