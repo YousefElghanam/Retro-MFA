@@ -81,7 +81,8 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 			{
 				*sprite = get_asset_data(buf);
 				// this helps to get rid of unknown encodings - can stay or go
-				if (sprite->size > 1700 && sprite->size < 200000)
+				if (sprite->width && sprite->height && 
+					sprite->size > 1700 && sprite->size < 200000)
 				{
 					prt_header(assets_found, buf);
 					printf("\e[0;32m  sprite @ 0x%.2X (%zu): %ix%i (%i bytes) color 0x%.4X | leading 0x%.4X\n\e[0m",
