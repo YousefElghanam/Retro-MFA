@@ -15,10 +15,14 @@ int main(int argc, char **argv) {
   while (read_file(&data)) // TODO state handling, bad file header etc. on parsing? the render call after loop
   	get_me_some_pretty_images(&data);
 //   	visual_test(&data);
-  rnd_frame(&data);
-  printf("\nusage:\n"
-		 "   press cursor keys to move between pages\n"
-		 "   press 'q' or 'esc' to quit\n\n");
-  mlx_loop(data.visual.mlx_ptr);
+  if (data.dinfo.total)
+  {
+	  rnd_frame(&data);
+	  printf("images: %i\n", data.dinfo.images);
+	  printf("\nusage:\n"
+			 "   press cursor keys to move between pages\n"
+			 "   press 'q' or 'esc' to quit\n\n");
+	  mlx_loop(data.visual.mlx_ptr);
+  }
   return (cleanup(&data, 0, NULL));
 }

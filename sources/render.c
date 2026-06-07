@@ -4,15 +4,9 @@ static void prt_frameinfo(t_debug* dinfo, t_list_dl *img_node)
 {
 	if (!DEBUG)
 		return ;
-	static unsigned int last_pixels;
-	// dinfo->pixels += last_px->x * last_px->y;
 	dinfo->frame++;
-	// printf("frame #%i: %6u pixels (total: %u pixels, %u bytes)\n",
-	// 	dinfo->frame, dinfo->pixels - last_pixels,
-	// 	dinfo->pixels, dinfo->pixels * 4);
 	printf("frame #%i: node %p mlx_img %p\n",
 		dinfo->frame, img_node, ((t_mlxu_img*) img_node->content)->ptr);
-	last_pixels = dinfo->pixels;
 }
 
 void rnd_frame(t_data *data)

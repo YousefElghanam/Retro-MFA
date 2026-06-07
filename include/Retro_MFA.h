@@ -50,7 +50,7 @@ typedef uint8_t t_byte;
 typedef struct s_debug
 {
 	unsigned int frame;
-	unsigned int pixels;
+	unsigned int total;
 	unsigned int images;
 } t_debug;
 

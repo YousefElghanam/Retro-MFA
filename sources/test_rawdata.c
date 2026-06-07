@@ -20,7 +20,7 @@ void visual_test(t_data *data)
 		data->offset, (unsigned int) data->offset);
 	for (ssize_t i = data->offset; i + 2 < data->bytes_read;)
 	{
-		data->dinfo.pixels++;
+		// data->dinfo.pixels++;
 		color = 0;
 		// -- COLLECTING COLOR INFORMATION
 		// color = buf[i] << 24 | buf[i + 1] << 16 | buf[i + 2] << 8;

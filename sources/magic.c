@@ -133,5 +133,6 @@ int get_me_some_pretty_images(t_data* data)
 		data->dinfo.images, data->visual.active.img_node);
 	data->offset = 0;
 	data->dinfo.images = 0;
+	data->dinfo.total++;
 	return (0);
 }
