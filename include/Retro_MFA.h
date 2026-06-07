@@ -32,6 +32,8 @@
 #define ASSET_HEADER_POS_WIDTH 12
 #define ASSET_HEADER_POS_HEIGHT 14
 #define ASSET_FILLER 240
+#define ASSET_COL_2BYTE 0x1006
+#define ASSET_COL_3BYTE 0x1004
 
 #define SPACING 8
 
@@ -60,8 +62,9 @@ typedef struct s_sprite {
   uint16_t width;
   uint16_t height;
   uint32_t size;
-  uint16_t
-      col_encoding; // 4100 for 3 byte per pixel // 4102 for 2 bytes per pixel
+  uint16_t col_encoding; // 4100 for 3 byte per pixel // 4102 for 2 bytes per pixel
+  uint16_t bytes_0_1;
+  short	col_num_bytes;
 } t_sprite;
 
 typedef struct s_data {

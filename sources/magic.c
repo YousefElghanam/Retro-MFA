@@ -4,10 +4,17 @@
 static t_sprite get_asset_data(t_byte* buf)
 {
 	t_sprite s;
+	s.bytes_0_1 = build_2_bytes_int(&buf[0]);
 	s.size = build_4_bytes_int(&buf[8]);
 	s.width = build_2_bytes_int(&buf[12]);
 	s.height = build_2_bytes_int(&buf[14]);
 	s.col_encoding = build_2_bytes_int(&buf[16]);
+	if (s.col_encoding == ASSET_COL_2BYTE)
+		s.col_num_bytes = 2;
+	else //if (s.col_encoding == ASSET_COL_3BYTE)
+		s.col_num_bytes = 3;
+	// else
+	// 	s.col_num_bytes = 1;
 	return (s);
 }
 
@@ -35,9 +42,10 @@ static ssize_t find_assets(t_byte *file_buf, ssize_t bytes_read, ssize_t *offset
 				// if (sprite->width > 25 && sprite->height > 25)
 				if (sprite->size > 2000 && sprite->size < 200000)
 				{
-					printf("  sprite @ 0x%.2X (%zu): %ix%i (%i bytes) color 0x%.2X\n",
+					printf("  sprite @ 0x%.2X (%zu): %ix%i (%i bytes) color 0x%.4X | leading 0x%.4X\n",
 						(unsigned int) *offset, *offset,
-						sprite->width, sprite->height, sprite->size, sprite->col_encoding);
+						sprite->width, sprite->height, sprite->size,
+						sprite->col_encoding, sprite->bytes_0_1);
 					assets_found++;
 					(*offset) += 32;
 					return (*offset);
@@ -96,20 +104,17 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 	ssize_t px_in_img;
 	int color;
 	static int ymax;
-	px_in_img = sprite->width * sprite->height * (2 + (sprite->col_encoding == 4100));
+	px_in_img = sprite->width * sprite->height * sprite->col_num_bytes;
 	if (adress + px_in_img >= data->bytes_read)
 		return ;
 	update_img_offset(data, sprite, &off, &ymax);
 	if (data->res != RES_OK)
     return ;
-	for (ssize_t i = 0; i < px_in_img; i += (2 + (sprite->col_encoding == 4100)))
+	for (ssize_t i = 0; i < px_in_img; i += sprite->col_num_bytes)
 	{
 		color = 0;
 		color = get_color(data->file_buf, adress + i, sprite);
 		mlxu_pixel_put_buffer(&data->visual, px.x + off.x, px.y + off.y, color);
-		// for debugging, higlight last row in RED
-		// if (px.y == sprite->height - 1)
-		// 	mlxu_pixel_put_buffer(&data->visual, px.x + off.x, px.y + off.y, RED);
 		advance_px(&px, sprite->width - 1);
 	}
 	// when rendering done for this image, adjust to the right by this image
@@ -122,7 +127,7 @@ static void render_single_image(t_data* data, ssize_t adress, t_sprite* sprite)
 void get_me_some_pretty_images(t_data* data)
 {
 	ssize_t addr = 0;
-	t_sprite sprite = {0,0,0, 0};
+	t_sprite sprite = {0,0,0,0,0,0};
 	static t_mlxu_img *prev = NULL;
 	if (data->res != RES_OK)
 		return;
